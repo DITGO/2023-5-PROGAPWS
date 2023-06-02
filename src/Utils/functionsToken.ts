@@ -6,7 +6,7 @@ export async function verifyToken(
   response: Response,
   next: NextFunction,
 ) {
-  const token = request.headers['token_sso'];
+  const token = request.headers['Token_sso'];
 
   if (!token) {
     return response
@@ -18,6 +18,7 @@ export async function verifyToken(
     const validationUrl = `https://ssows-h.ssp.go.gov.br/validate?token=${token}`;
 
     const apiResponse = await axios.get(validationUrl);
+    console.log(apiResponse);
 
     if (!apiResponse.data.token || apiResponse.data.token === '') {
       return response.status(401).json({

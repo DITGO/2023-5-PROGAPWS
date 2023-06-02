@@ -28,13 +28,6 @@ const deliveryController = new DeliveryObjectController();
     PATCH => Alteração específica
 */
 router.get('/generateToken', objectsController.token);
-// rotas de eixos
-router.post('/axles', verifyToken, axleController.create);
-router.get('/axles', verifyToken, axleController.all);
-router.get('/axles/:id', verifyToken, axleController.one);
-router.put('/axles/:id', verifyToken, axleController.update);
-router.delete('/axles/:id', verifyToken, axleController.remove);
-router.patch('/axles/:id', verifyToken, axleController.restore);
 
 //rotas de recursos
 router.post('/resources', verifyToken, resourceController.create);
@@ -43,6 +36,14 @@ router.get('/resources/:id', verifyToken, resourceController.one);
 router.put('/resources/:id', verifyToken, resourceController.update);
 router.delete('/resources/:id', verifyToken, resourceController.remove);
 router.patch('/resources/:id', verifyToken, resourceController.restore);
+
+// rotas de eixos
+router.post('/axles', verifyToken, axleController.create);
+router.get('/axles', verifyToken, axleController.all);
+router.get('/axles/:id', verifyToken, axleController.one);
+router.put('/axles/:id', verifyToken, axleController.update);
+router.delete('/axles/:id', verifyToken, axleController.remove);
+router.patch('/axles/:id', verifyToken, axleController.restore);
 
 //rotas de destinação
 router.post('/destinations', verifyToken, destinationController.create);
