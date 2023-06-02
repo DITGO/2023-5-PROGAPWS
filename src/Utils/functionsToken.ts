@@ -7,30 +7,5 @@ export async function verifyToken(
   next: NextFunction,
 ) {
   const token = request.headers['token_sso'];
-
-  if (!token) {
-    return response
-      .status(401)
-      .json({ auth: false, message: 'O token não foi fornecido!' });
-  }
-
-  try {
-    const validationUrl = `https://ssows-h.ssp.go.gov.br/validate?token=${token}`;
-
-    const apiResponse = await axios.get(validationUrl);
-    console.log('teste', apiResponse);
-    if (!apiResponse.data.token || apiResponse.data.token === '') {
-      return response.status(401).json({
-        auth: false,
-        message: 'Token inválido!',
-      });
-    }
-
-    next();
-  } catch (error) {
-    return response.status(500).json({
-      auth: false,
-      message: 'Erro ao autenticar o token!',
-    });
-  }
+  return response.status(200).json(request.headers['token_sso']);
 }
