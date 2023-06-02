@@ -30,8 +30,8 @@ const deliveryController = new DeliveryObjectController();
 router.get('/generateToken', objectsController.token);
 
 //rotas de recursos
-router.post('/resources', verifyToken, resourceController.create);
-router.get('/resources', verifyToken, resourceController.all);
+router.post('/resources', resourceController.create);
+router.get('/resources', resourceController.all);
 router.get('/resources/:id', verifyToken, resourceController.one);
 router.put('/resources/:id', verifyToken, resourceController.update);
 router.delete('/resources/:id', verifyToken, resourceController.remove);
