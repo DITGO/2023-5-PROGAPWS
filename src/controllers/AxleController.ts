@@ -7,7 +7,6 @@ import { Axle } from '../models/Axle';
 class AxleController {
   async create(request: Request, response: Response, next: NextFunction) {
     const { name, description } = request.body;
-
     const schema = yup.object().shape({
       name: yup.string().required(),
       description: yup.string(),
@@ -22,7 +21,6 @@ class AxleController {
     }
 
     const axleRepository = APPDataSource.getRepository(Axle);
-
     const axleAlreadyExists = await axleRepository.findOne({
       where: { name: name },
     });
