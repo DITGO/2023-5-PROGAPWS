@@ -7,11 +7,9 @@ import { Nature } from '../models/Nature';
 class NatureController {
   async create(request: Request, response: Response, next: NextFunction) {
     const { name } = request.body;
-
     const schema = yup.object().shape({
       name: yup.string().required(),
     });
-
     try {
       await schema.validate(request.body, { abortEarly: false });
     } catch (err) {
@@ -19,7 +17,6 @@ class NatureController {
         .status(400)
         .json({ status: 'Erro de validação dos campos!' });
     }
-
     const natureRepository = APPDataSource.getRepository(Nature);
 
     const natureAlreadyExists = await natureRepository.findOne({
