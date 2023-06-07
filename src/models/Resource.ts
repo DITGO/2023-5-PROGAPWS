@@ -19,7 +19,7 @@ export class Resource {
 
   @Column({
     nullable: true,
-  }) // Poderia passar o nome da coluna: @Column("name"), mas o atributo já está com mesmo nome
+  })
   grantor: string;
 
   @Column()
@@ -28,7 +28,9 @@ export class Resource {
   @Column()
   type: string;
 
-  @Column()
+  @Column({
+    nullable: true,
+  })
   typeExpense: string;
 
   @Column({

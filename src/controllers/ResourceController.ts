@@ -23,7 +23,6 @@ class ResourceController {
     const schema = yup.object().shape({
       source: yup.string().required(),
       type: yup.string().required(),
-      typeExpense: yup.string().required(),
       resourceYear: yup.string(),
       processNumber: yup.string(),
       commitmentDate: yup.string(),
@@ -65,6 +64,9 @@ class ResourceController {
     }
     if (resourceNumber) {
       resource.resourceNumber = resourceNumber;
+    }
+    if (typeExpense) {
+      resource.typeExpense = typeExpense;
     }
 
     await resourceObjectRepository.save(resource);
@@ -113,7 +115,6 @@ class ResourceController {
     const schema = yup.object().shape({
       source: yup.string().required(),
       type: yup.string().required(),
-      typeExpense: yup.string().required(),
       resourceYear: yup.string(),
       processNumber: yup.string(),
       commitmentDate: yup.string(),
