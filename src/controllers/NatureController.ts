@@ -39,7 +39,7 @@ class NatureController {
   async all(request: Request, response: Response, next: NextFunction) {
     const natureRepository = APPDataSource.getRepository(Nature);
     const all = await natureRepository.find();
-    console.log(all);
+
     return response.json(all);
   }
 
