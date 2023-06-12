@@ -2,7 +2,7 @@
 set -e
 
 psql -v ON_ERROR_STOP=1 --username "postgres" --dbname "postgres" <<-EOSQL
-    CREATE USER IF NOT EXISTS api_servidores;
+    CREATE USER api_servidores;
     ALTER USER api_servidores PASSWORD 'api_password';
 EOSQL
 
