@@ -45,9 +45,10 @@ router.put('/axles/:id', verifyToken, axleController.update);
 router.delete('/axles/:id', verifyToken, axleController.remove);
 router.patch('/axles/:id', verifyToken, axleController.restore);
 
-//rotas de destinação
+//rotas de destinação teste
 router.post('/destinations', verifyToken, destinationController.create);
 router.get('/destinations', verifyToken, destinationController.all);
+
 router.get('/destinations/:id', verifyToken, destinationController.one);
 router.put('/destinations/:id', verifyToken, destinationController.update);
 router.delete('/destinations/:id', verifyToken, destinationController.remove);
