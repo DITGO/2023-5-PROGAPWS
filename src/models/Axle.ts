@@ -10,12 +10,12 @@ import {
 import { v4 as uuid } from 'uuid'; // Importando o uuid v4 e renomeando pra uuid
 import { Resource } from './Resource';
 
-@Entity('axles') // Do TypeORM, pois será uma entidade do banco de dados, utilizada no controller
+@Entity('axles')
 export class Axle {
   @PrimaryColumn()
-  readonly id: string; // o readonly para não deixar quem tem informação do id mudar o valor, nesse caso o controller poderá só ler
+  readonly id: string;
 
-  @Column() // Poderia passar o nome da coluna: @Column("name"), mas o atributo já está com mesmo nome
+  @Column()
   name: string;
 
   @Column()
