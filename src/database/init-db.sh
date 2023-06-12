@@ -9,7 +9,7 @@ EOSQL
 database_exists=$(psql -U postgres -tAc "SELECT 1 FROM pg_database WHERE datname='gap_project'")
 
 if [ "$database_exists" != "1" ]; then
-    createdb -U postgres -O api_servidores gap_project
+    psql -U postgres -c "CREATE DATABASE gap_project OWNER api_servidores"
 fi
 
 
