@@ -54,7 +54,7 @@ router.put('/destinations/:id', verifyToken, destinationController.update);
 router.delete('/destinations/:id', verifyToken, destinationController.remove);
 router.patch('/destinations/:id', verifyToken, destinationController.restore);
 
-// objetos do recursos teste
+// objetos do recursos
 router.post('/resourceobjects', verifyToken, resourceObjectController.create);
 router.get('/resourceobjects', verifyToken, resourceObjectController.all);
 router.get('/resourceobjects/:id', verifyToken, resourceObjectController.one);
