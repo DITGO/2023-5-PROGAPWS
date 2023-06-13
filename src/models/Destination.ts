@@ -23,7 +23,10 @@ export class Destination {
   @Column()
   subUnitId: string;
 
-  @ManyToOne(() => Resource, resource => resource.destination, { eager: true })
+  @ManyToOne(() => Resource, resource => resource.destination, {
+    eager: true,
+    nullable: false,
+  })
   resources: Resource;
 
   @OneToMany(() => ResourceObject, resourceObject => resourceObject.destination)

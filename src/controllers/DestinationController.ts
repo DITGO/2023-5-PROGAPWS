@@ -28,7 +28,7 @@ class DestinationController {
     });
 
     if (destinationAlreadyExists) {
-      return response.status(400).json({ status: 'Recurso já existe!' });
+      return response.status(400).json({ status: 'Destinação já existe!' });
     }
 
     const destination = destinationObjectRepository.create({

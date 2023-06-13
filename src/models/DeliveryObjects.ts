@@ -1,7 +1,6 @@
 import {
   Column,
   CreateDateColumn,
-  DeleteDateColumn,
   Entity,
   ManyToOne,
   PrimaryColumn,
@@ -27,7 +26,7 @@ export class DeliveryObjects {
   @ManyToOne(
     () => ResourceObject,
     resourceObject => resourceObject.deliveryObjects,
-    { eager: true },
+    { eager: true, nullable: false },
   )
   resourceObjects: ResourceObject;
 

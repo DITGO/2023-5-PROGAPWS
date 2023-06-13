@@ -38,10 +38,14 @@ export class ResourceObject {
 
   @ManyToOne(() => Destination, destination => destination.resourcesObjects, {
     eager: true,
+    nullable: false,
   })
   destination: Destination;
 
-  @ManyToOne(() => Objects, objetc => objetc.resourcesObjects, { eager: true })
+  @ManyToOne(() => Objects, objetc => objetc.resourcesObjects, {
+    eager: true,
+    nullable: false,
+  })
   objects: Objects;
 
   @OneToMany(
