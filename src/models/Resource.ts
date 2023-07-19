@@ -28,9 +28,7 @@ export class Resource {
   @Column()
   type: string;
 
-  @Column({
-    nullable: true,
-  })
+  @Column()
   natureExpense: string;
 
   @Column()

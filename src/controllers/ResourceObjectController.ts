@@ -13,8 +13,8 @@ class ResourceObjectController {
       status,
       progress,
       balance,
-      resourceNumber,
-      commitmentDate,
+      processNumber,
+      dateCommitted,
       deliveryDate,
       settlementDate,
       objects,
@@ -28,8 +28,8 @@ class ResourceObjectController {
       status: yup.string().required(),
       progress: yup.string().required(),
       balance: yup.string().required(),
-      resourceNumber: yup.string().required(),
-      commitmentDate: yup.string().required(),
+      processNumber: yup.string().required(),
+      dateCommitted: yup.string().required(),
       deliveryDate: yup.string().required(),
       settlementDate: yup.string().required(),
     });
@@ -46,7 +46,7 @@ class ResourceObjectController {
       APPDataSource.getRepository(ResourceObject);
 
     // const resourceAlreadyExists = await resourceObjectRepository.findOne({
-    //   where: { resourceNumber: resourceNumber },
+    //   where: { processNumber: processNumber },
     // });
 
     // if (resourceAlreadyExists) {
@@ -60,8 +60,8 @@ class ResourceObjectController {
       status,
       progress,
       balance,
-      resourceNumber,
-      commitmentDate,
+      processNumber,
+      dateCommitted,
       deliveryDate,
       destination,
       settlementDate,
@@ -106,8 +106,8 @@ class ResourceObjectController {
       status,
       progress,
       balance,
-      resourceNumber,
-      commitmentDate,
+      processNumber,
+      dateCommitted,
       deliveryDate,
       settlementDate,
       objects,
@@ -122,8 +122,8 @@ class ResourceObjectController {
       status: yup.string().required(),
       progress: yup.string().required(),
       balance: yup.string().required(),
-      resourceNumber: yup.string().required(),
-      commitmentDate: yup.string().required(),
+      processNumber: yup.string().required(),
+      dateCommitted: yup.string().required(),
       deliveryDate: yup.string().required(),
       settlementDate: yup.string().required(),
     });
@@ -150,8 +150,8 @@ class ResourceObjectController {
         status,
         progress,
         balance,
-        resourceNumber,
-        commitmentDate,
+        processNumber,
+        dateCommitted,
         deliveryDate,
         destination,
         settlementDate,

@@ -37,10 +37,10 @@ export class ResourceObject {
   balance: string;
 
   @Column()
-  resourceNumber: string;
+  processNumber: string;
 
   @Column()
-  commitmentDate: string;
+  dateCommitted: string;
 
   @Column()
   deliveryDate: string;
