@@ -13,8 +13,12 @@ class ResourceObjectController {
       status,
       progress,
       balance,
-      destination,
+      resourceNumber,
+      commitmentDate,
+      deliveryDate,
+      settlementDate,
       objects,
+      destination,
     } = request.body;
 
     const schema = yup.object().shape({
@@ -24,6 +28,10 @@ class ResourceObjectController {
       status: yup.string().required(),
       progress: yup.string().required(),
       balance: yup.string().required(),
+      resourceNumber: yup.string().required(),
+      commitmentDate: yup.string().required(),
+      deliveryDate: yup.string().required(),
+      settlementDate: yup.string().required(),
     });
 
     try {
@@ -52,7 +60,11 @@ class ResourceObjectController {
       status,
       progress,
       balance,
+      resourceNumber,
+      commitmentDate,
+      deliveryDate,
       destination,
+      settlementDate,
       objects,
     });
 
@@ -94,8 +106,12 @@ class ResourceObjectController {
       status,
       progress,
       balance,
-      destination,
+      resourceNumber,
+      commitmentDate,
+      deliveryDate,
+      settlementDate,
       objects,
+      destination,
     } = request.body;
     const id = request.params.id;
 
@@ -106,6 +122,10 @@ class ResourceObjectController {
       status: yup.string().required(),
       progress: yup.string().required(),
       balance: yup.string().required(),
+      resourceNumber: yup.string().required(),
+      commitmentDate: yup.string().required(),
+      deliveryDate: yup.string().required(),
+      settlementDate: yup.string().required(),
     });
 
     try {
@@ -130,7 +150,11 @@ class ResourceObjectController {
         status,
         progress,
         balance,
+        resourceNumber,
+        commitmentDate,
+        deliveryDate,
         destination,
+        settlementDate,
         objects,
       },
     );

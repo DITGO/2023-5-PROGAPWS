@@ -36,6 +36,18 @@ export class ResourceObject {
   @Column()
   balance: string;
 
+  @Column()
+  resourceNumber: string;
+
+  @Column()
+  commitmentDate: string;
+
+  @Column()
+  deliveryDate: string;
+
+  @Column()
+  settlementDate: string;
+
   @ManyToOne(() => Destination, destination => destination.resourcesObjects, {
     eager: true,
     nullable: false,

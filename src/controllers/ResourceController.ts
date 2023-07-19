@@ -10,24 +10,23 @@ class ResourceController {
       grantor,
       source,
       type,
-      typeExpense,
+      natureExpense,
       resourceNumber,
       resourceYear,
-      processNumber,
-      commitmentDate,
-      deliveryDate,
-      settlementDate,
+      goal,
+      totalValue,
+      balance,
       axle,
     } = request.body;
 
     const schema = yup.object().shape({
       source: yup.string().required(),
       type: yup.string().required(),
+      resourceNumber: yup.string().required(),
       resourceYear: yup.string(),
-      processNumber: yup.string(),
-      commitmentDate: yup.string(),
-      deliveryDate: yup.string(),
-      settlementDate: yup.string(),
+      goal: yup.string(),
+      totalValue: yup.string(),
+      balance: yup.string(),
     });
 
     try {
@@ -44,13 +43,12 @@ class ResourceController {
       grantor,
       source,
       type,
-      typeExpense,
+      natureExpense,
       resourceNumber,
       resourceYear,
-      processNumber,
-      commitmentDate,
-      deliveryDate,
-      settlementDate,
+      goal,
+      totalValue,
+      balance,
       axle,
     });
 
@@ -62,11 +60,12 @@ class ResourceController {
     if (grantor) {
       resource.grantor = grantor;
     }
+
     if (resourceNumber) {
       resource.resourceNumber = resourceNumber;
     }
-    if (typeExpense) {
-      resource.typeExpense = typeExpense;
+    if (natureExpense) {
+      resource.natureExpense = natureExpense;
     }
 
     await resourceObjectRepository.save(resource);
@@ -101,13 +100,12 @@ class ResourceController {
       grantor,
       source,
       type,
-      typeExpense,
+      natureExpense,
       resourceNumber,
       resourceYear,
-      processNumber,
-      commitmentDate,
-      deliveryDate,
-      settlementDate,
+      goal,
+      totalValue,
+      balance,
       axle,
     } = request.body;
     const id = request.params.id;
@@ -115,11 +113,11 @@ class ResourceController {
     const schema = yup.object().shape({
       source: yup.string().required(),
       type: yup.string().required(),
+      resourceNumber: yup.string().required(),
       resourceYear: yup.string(),
-      processNumber: yup.string(),
-      commitmentDate: yup.string(),
-      deliveryDate: yup.string(),
-      settlementDate: yup.string(),
+      goal: yup.string(),
+      totalValue: yup.string(),
+      balance: yup.string(),
     });
 
     try {
@@ -140,13 +138,12 @@ class ResourceController {
         grantor,
         source,
         type,
-        typeExpense,
+        natureExpense,
         resourceNumber,
         resourceYear,
-        processNumber,
-        commitmentDate,
-        deliveryDate,
-        settlementDate,
+        goal,
+        totalValue,
+        balance,
         axle,
       },
     );
@@ -196,22 +193,6 @@ class ResourceController {
     }
 
     return response.json(resourceObjectRepository);
-  }
-
-  async paginar(request: Request, response: Response, next: NextFunction) {
-    const resourceObjectRepository = APPDataSource.getRepository(Resource);
-
-    const { perPage, page, column } = request.query;
-    const skip = parseInt(page.toString()) * parseInt(perPage.toString());
-
-    const all = await resourceObjectRepository
-      .createQueryBuilder('object')
-      .take(parseInt(perPage.toString()))
-      .skip(skip)
-      .addOrderBy(column.toString(), 'ASC')
-      .getMany();
-
-    return response.json(all);
   }
 
   async token(request: Request, response: Response, next: NextFunction) {

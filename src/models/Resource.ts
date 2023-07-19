@@ -31,27 +31,22 @@ export class Resource {
   @Column({
     nullable: true,
   })
-  typeExpense: string;
+  natureExpense: string;
 
-  @Column({
-    nullable: true,
-  })
+  @Column()
   resourceNumber: string;
 
   @Column()
   resourceYear: string;
 
   @Column()
-  processNumber: string;
+  goal: string;
 
   @Column()
-  commitmentDate: string;
+  totalValue: string;
 
   @Column()
-  deliveryDate: string;
-
-  @Column()
-  settlementDate: string;
+  balance: string;
 
   @ManyToOne(() => Axle, axle => axle.resources, {
     eager: true,
