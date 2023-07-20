@@ -22,7 +22,6 @@ class ResourceController {
     const schema = yup.object().shape({
       source: yup.string().required(),
       type: yup.string().required(),
-      resourceNumber: yup.string().required(),
       resourceYear: yup.string(),
       goal: yup.string(),
       totalValue: yup.string(),
