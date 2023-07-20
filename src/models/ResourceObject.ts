@@ -34,9 +34,6 @@ export class ResourceObject {
   progress: string;
 
   @Column()
-  balance: string;
-
-  @Column()
   processNumber: string;
 
   @Column()

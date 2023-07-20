@@ -31,13 +31,17 @@ export class Resource {
   @Column()
   natureExpense: string;
 
-  @Column()
+  @Column({
+    nullable: true,
+  })
   resourceNumber: string;
 
   @Column()
   resourceYear: string;
 
-  @Column()
+  @Column({
+    nullable: true,
+  })
   goal: string;
 
   @Column()

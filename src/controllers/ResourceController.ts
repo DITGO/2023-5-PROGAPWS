@@ -64,8 +64,9 @@ class ResourceController {
     if (resourceNumber) {
       resource.resourceNumber = resourceNumber;
     }
-    if (natureExpense) {
-      resource.natureExpense = natureExpense;
+
+    if (goal) {
+      resource.goal = goal;
     }
 
     await resourceObjectRepository.save(resource);
