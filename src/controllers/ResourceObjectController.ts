@@ -57,7 +57,6 @@ class ResourceObjectController {
       totalValue,
       status,
       progress,
-
       processNumber,
       dateCommitted,
       deliveryDate,
@@ -103,7 +102,6 @@ class ResourceObjectController {
       totalValue,
       status,
       progress,
-
       processNumber,
       dateCommitted,
       deliveryDate,

@@ -20,10 +20,10 @@ class ResourceController {
     } = request.body;
 
     const schema = yup.object().shape({
-      source: yup.string().required(),
       type: yup.string().required(),
+      source: yup.string().required(),
+      natureExpense: yup.string(),
       resourceYear: yup.string(),
-      goal: yup.string(),
       totalValue: yup.string(),
       balance: yup.string(),
     });
@@ -111,11 +111,10 @@ class ResourceController {
     const id = request.params.id;
 
     const schema = yup.object().shape({
-      source: yup.string().required(),
       type: yup.string().required(),
-      resourceNumber: yup.string().required(),
+      source: yup.string().required(),
+      natureExpense: yup.string(),
       resourceYear: yup.string(),
-      goal: yup.string(),
       totalValue: yup.string(),
       balance: yup.string(),
     });
