@@ -36,13 +36,19 @@ export class ResourceObject {
   @Column()
   processNumber: string;
 
-  @Column()
+  @Column({
+    nullable: true,
+  })
   dateCommitted: string;
 
-  @Column()
+  @Column({
+    nullable: true,
+  })
   deliveryDate: string;
 
-  @Column()
+  @Column({
+    nullable: true,
+  })
   settlementDate: string;
 
   @ManyToOne(() => Destination, destination => destination.resourcesObjects, {

@@ -50,14 +50,14 @@ export class Resource {
   @Column()
   balance: string;
 
-  @ManyToOne(() => Axle, axle => axle.resources, {
-    eager: true,
-    nullable: true,
-  })
-  axle: Axle;
+  // @ManyToOne(() => Axle, axle => axle.resources, {
+  //   eager: true,
+  //   nullable: true,
+  // })
+  // axle: Axle;
 
-  @OneToMany(() => Destination, Destination => Destination.resources)
-  destination: Destination[];
+  // @OneToMany(() => Destination, Destination => Destination.resources)
+  // destination: Destination[];
 
   @DeleteDateColumn()
   deleted_at: Date;

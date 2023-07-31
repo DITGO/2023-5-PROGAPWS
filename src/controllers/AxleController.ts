@@ -44,7 +44,7 @@ class AxleController {
 
     const all = await axleRepository.find({
       relations: {
-        resources: true,
+        bottomToBottom: true,
       },
     });
 

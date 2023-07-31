@@ -9,32 +9,39 @@ import {
   UpdateDateColumn,
 } from 'typeorm';
 import { v4 as uuid } from 'uuid'; // Importando o uuid v4 e renomeando pra uuid
-import { ResourceObject } from './ResourceObject';
-import { BottomToBottom } from './bottomToBottom';
+import { Axle } from './Axle';
+import { Goal } from './Goal';
+import { Destination } from './Destination';
 
-@Entity('destinations') // Do TypeORM, pois será uma entidade do banco de dados, utilizada no controller
-export class Destination {
+@Entity('bottomToBottom') // Do TypeORM, pois será uma entidade do banco de dados, utilizada no controller
+export class BottomToBottom {
   @PrimaryColumn()
   readonly id: string; // o readonly para não deixar quem tem informação do id mudar o valor, nesse caso o controller poderá só ler
 
   @Column()
-  unitId: string;
+  source: string;
 
   @Column()
-  subUnitId: string;
+  year: string;
 
-  @ManyToOne(
-    () => BottomToBottom,
-    bottomToBottom => bottomToBottom.destination,
-    {
-      eager: true,
-      nullable: true,
-    },
-  )
-  bottomToBottom: BottomToBottom;
+  @Column()
+  amount: string;
 
-  @OneToMany(() => ResourceObject, resourceObject => resourceObject.destination)
-  resourcesObjects: ResourceObject[];
+  @Column()
+  balance: string;
+
+  @ManyToOne(() => Axle, axle => axle.bottomToBottom, {
+    eager: true,
+  })
+  axle: Axle;
+
+  @ManyToOne(() => Goal, goal => goal.bottomToBottom, {
+    eager: true,
+  })
+  goal: Goal;
+
+  @OneToMany(() => Destination, Destination => Destination.bottomToBottom)
+  destination: Destination[];
 
   @DeleteDateColumn()
   deleted_at: Date;

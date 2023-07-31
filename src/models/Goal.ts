@@ -3,38 +3,23 @@ import {
   CreateDateColumn,
   DeleteDateColumn,
   Entity,
-  ManyToOne,
   OneToMany,
   PrimaryColumn,
   UpdateDateColumn,
 } from 'typeorm';
 import { v4 as uuid } from 'uuid'; // Importando o uuid v4 e renomeando pra uuid
-import { ResourceObject } from './ResourceObject';
 import { BottomToBottom } from './bottomToBottom';
 
-@Entity('destinations') // Do TypeORM, pois será uma entidade do banco de dados, utilizada no controller
-export class Destination {
+@Entity('goal')
+export class Goal {
   @PrimaryColumn()
-  readonly id: string; // o readonly para não deixar quem tem informação do id mudar o valor, nesse caso o controller poderá só ler
+  readonly id: string;
 
   @Column()
-  unitId: string;
+  description: string;
 
-  @Column()
-  subUnitId: string;
-
-  @ManyToOne(
-    () => BottomToBottom,
-    bottomToBottom => bottomToBottom.destination,
-    {
-      eager: true,
-      nullable: true,
-    },
-  )
-  bottomToBottom: BottomToBottom;
-
-  @OneToMany(() => ResourceObject, resourceObject => resourceObject.destination)
-  resourcesObjects: ResourceObject[];
+  @OneToMany(() => BottomToBottom, bottomToBottom => bottomToBottom.goal)
+  bottomToBottom: BottomToBottom[];
 
   @DeleteDateColumn()
   deleted_at: Date;

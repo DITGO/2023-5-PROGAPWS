@@ -6,7 +6,7 @@ import { Destination } from '../models/Destination';
 
 class DestinationController {
   async create(request: Request, response: Response, next: NextFunction) {
-    const { unitId, subUnitId, resources } = request.body;
+    const { unitId, subUnitId, bottomToBottom } = request.body;
 
     const schema = yup.object().shape({
       unitId: yup.string().required(),
@@ -34,7 +34,7 @@ class DestinationController {
     const destination = destinationObjectRepository.create({
       unitId,
       subUnitId,
-      resources,
+      bottomToBottom,
     });
 
     await destinationObjectRepository.save(destination);
@@ -48,7 +48,7 @@ class DestinationController {
 
     const all = await destinationObjectRepository.find({
       relations: {
-        resources: true,
+        bottomToBottom: true,
       },
     });
 
@@ -69,7 +69,7 @@ class DestinationController {
   }
 
   async update(request: Request, response: Response, next: NextFunction) {
-    const { unitId, subUnitId, resources } = request.body;
+    const { unitId, subUnitId, bottomToBottom } = request.body;
     const id = request.params.id;
 
     const schema = yup.object().shape({
@@ -95,7 +95,7 @@ class DestinationController {
       {
         unitId,
         subUnitId,
-        resources,
+        bottomToBottom,
       },
     );
 

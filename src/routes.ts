@@ -3,18 +3,24 @@ import { AxleController } from './controllers/AxleController';
 import { ModelController } from './controllers/ModelController';
 import { NatureController } from './controllers/NatureController';
 import { ObjectsController } from './controllers/ObjectsController';
-import { ResourceController } from './controllers/ResourceController';
+// import { ResourceController } from './controllers/ResourceController';
 import { DestinationController } from './controllers/DestinationController';
 import { DeliveryObjectController } from './controllers/DeliveryObjectController';
 import { ResourceObjectController } from './controllers/ResourceObjectController';
 import { verifyToken } from './Utils/functionsToken';
+import { BottomToBottomController } from './controllers/bottomToBottomController';
+import { GoalController } from './controllers/GoalController';
 
 const router = Router();
 const objectsController = new ObjectsController();
 const natureController = new NatureController();
 const modelController = new ModelController();
 const axleController = new AxleController();
-const resourceController = new ResourceController();
+// const resourceController = new ResourceController();
+
+const bottomToBottomController = new BottomToBottomController();
+const goalController = new GoalController();
+
 const destinationController = new DestinationController();
 const resourceObjectController = new ResourceObjectController();
 const deliveryController = new DeliveryObjectController();
@@ -28,14 +34,37 @@ const deliveryController = new DeliveryObjectController();
     PATCH => Alteração específica
 */
 router.get('/generateToken', objectsController.token);
+//fundo a fundo
+router.post('/bottomToBottom', verifyToken, bottomToBottomController.create);
+router.get('/bottomToBottom', verifyToken, bottomToBottomController.all);
+router.get('/bottomToBottom/:id', verifyToken, bottomToBottomController.one);
+router.put('/bottomToBottom/:id', verifyToken, bottomToBottomController.update);
+router.delete(
+  '/bottomToBottom/:id',
+  verifyToken,
+  bottomToBottomController.remove,
+);
+router.patch(
+  '/bottomToBottom/:id',
+  verifyToken,
+  bottomToBottomController.restore,
+);
+
+//metas
+router.post('/goals', verifyToken, goalController.create);
+router.get('/goals', verifyToken, goalController.all);
+router.get('/goals/:id', verifyToken, goalController.one);
+router.put('/goals/:id', verifyToken, goalController.update);
+router.delete('/goals/:id', verifyToken, goalController.remove);
+router.patch('/goals/:id', verifyToken, goalController.restore);
 
 //rotas de recursos
-router.post('/resources', verifyToken, resourceController.create);
-router.get('/resources', verifyToken, resourceController.all);
-router.get('/resources/:id', verifyToken, resourceController.one);
-router.put('/resources/:id', verifyToken, resourceController.update);
-router.delete('/resources/:id', verifyToken, resourceController.remove);
-router.patch('/resources/:id', verifyToken, resourceController.restore);
+// router.post('/resources', verifyToken, resourceController.create);
+// router.get('/resources', verifyToken, resourceController.all);
+// router.get('/resources/:id', verifyToken, resourceController.one);
+// router.put('/resources/:id', verifyToken, resourceController.update);
+// router.delete('/resources/:id', verifyToken, resourceController.remove);
+// router.patch('/resources/:id', verifyToken, resourceController.restore);
 
 // rotas de eixos
 router.post('/axles', verifyToken, axleController.create);
