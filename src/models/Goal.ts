@@ -3,11 +3,13 @@ import {
   CreateDateColumn,
   DeleteDateColumn,
   Entity,
+  ManyToOne,
   OneToMany,
   PrimaryColumn,
   UpdateDateColumn,
 } from 'typeorm';
 import { v4 as uuid } from 'uuid'; // Importando o uuid v4 e renomeando pra uuid
+import { BottomToBottom } from './BottomToBottom';
 import { ResourceObject } from './ResourceObject';
 
 @Entity('goal')
@@ -18,8 +20,19 @@ export class Goal {
   @Column()
   description: string;
 
+  @Column()
+  predictedValue: string;
+
+  @Column()
+  balance: string;
+
+  @ManyToOne(() => BottomToBottom, bottomToBottom => bottomToBottom.goal, {
+    eager: true,
+  })
+  bottomToBottom: BottomToBottom;
+
   @OneToMany(() => ResourceObject, resourceObject => resourceObject.goal)
-  resourceObjects: ResourceObject[];
+  resourcesObjects: ResourceObject[];
 
   @DeleteDateColumn()
   deleted_at: Date;

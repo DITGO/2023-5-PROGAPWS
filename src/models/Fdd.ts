@@ -3,41 +3,27 @@ import {
   CreateDateColumn,
   DeleteDateColumn,
   Entity,
-  ManyToOne,
   OneToMany,
   PrimaryColumn,
   UpdateDateColumn,
 } from 'typeorm';
 import { v4 as uuid } from 'uuid'; // Importando o uuid v4 e renomeando pra uuid
-import { Objects } from './Objects';
-import { Goal } from './Goal';
+
 import { Destination } from './Destination';
 
-@Entity('resourcesObjects') // Do TypeORM, pois será uma entidade do banco de dados, utilizada no controller
-export class ResourceObject {
+@Entity('fdd') // Do TypeORM, pois será uma entidade do banco de dados, utilizada no controller
+export class FDD {
   @PrimaryColumn()
   readonly id: string; // o readonly para não deixar quem tem informação do id mudar o valor, nesse caso o controller poderá só ler
 
-  @Column() // Poderia passar o nome da coluna: @Column("name"), mas o atributo já está com mesmo nome
+  @Column()
+  source: string;
+
+  @Column()
+  year: string;
+
+  @Column()
   amount: string;
-
-  @Column()
-  unitaryValue: string;
-
-  @Column()
-  totalValue: string;
-
-  @Column()
-  status: string;
-
-  @Column()
-  progress: string;
-
-  @Column()
-  processNumber: string;
-
-  @Column()
-  natureExpense: string;
 
   @Column()
   estimatedValue: string;
@@ -47,35 +33,11 @@ export class ResourceObject {
   })
   executedValue: string;
 
-  @Column({
-    nullable: true,
-  })
-  dateCommitted: string;
+  @Column()
+  balance: string;
 
-  @Column({
-    nullable: true,
-  })
-  deliveryDate: string;
-
-  @Column({
-    nullable: true,
-  })
-  settlementDate: string;
-
-  @ManyToOne(() => Goal, goal => goal.resourcesObjects, {
-    eager: true,
-    nullable: false,
-  })
-  goal: Goal;
-
-  @ManyToOne(() => Objects, objetc => objetc.resourcesObjects, {
-    eager: true,
-    nullable: false,
-  })
-  objects: Objects;
-
-  @OneToMany(() => Destination, destination => destination.resourcesObjects)
-  destinations: Destination[];
+  // @OneToMany(() => Destination, Destination => Destination.bottomToBottom)
+  // destination: Destination[];
 
   @DeleteDateColumn()
   deleted_at: Date;

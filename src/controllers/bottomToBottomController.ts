@@ -2,7 +2,7 @@ import { NextFunction, Request, Response } from 'express';
 import * as yup from 'yup';
 import { APPDataSource } from '../database/data-source';
 import jwt from 'jsonwebtoken';
-import { BottomToBottom } from '../models/bottomToBottom';
+import { BottomToBottom } from '../models/BottomToBottom';
 
 class BottomToBottomController {
   async create(request: Request, response: Response, next: NextFunction) {

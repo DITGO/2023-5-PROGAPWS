@@ -2,12 +2,10 @@ import {
   Column,
   CreateDateColumn,
   Entity,
-  ManyToOne,
   PrimaryColumn,
   UpdateDateColumn,
 } from 'typeorm';
 import { v4 as uuid } from 'uuid'; // Importando o uuid v4 e renomeando pra uuid
-import { ResourceObject } from './ResourceObject';
 
 @Entity('deliveryObjects') // Do TypeORM, pois será uma entidade do banco de dados, utilizada no controller
 export class DeliveryObjects {
@@ -22,13 +20,6 @@ export class DeliveryObjects {
 
   @Column()
   observation: string;
-
-  @ManyToOne(
-    () => ResourceObject,
-    resourceObject => resourceObject.deliveryObjects,
-    { eager: true, nullable: false },
-  )
-  resourceObjects: ResourceObject;
 
   @CreateDateColumn() // Para já capturar a data e fazer a formatação
   created_at: Date;

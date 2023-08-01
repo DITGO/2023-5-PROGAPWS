@@ -8,7 +8,7 @@ import {
   UpdateDateColumn,
 } from 'typeorm';
 import { v4 as uuid } from 'uuid'; // Importando o uuid v4 e renomeando pra uuid
-import { ResourceObject } from './ResourceObject';
+import { BottomToBottom } from './BottomToBottom';
 
 @Entity('axles')
 export class Axle {
@@ -21,11 +21,8 @@ export class Axle {
   @Column()
   description: string;
 
-  // @OneToMany(() => Resource, resource => resource.axle)
-  // resources: Resource[];
-
-  @OneToMany(() => ResourceObject, resourceObject => resourceObject.axle)
-  resourceObjects: ResourceObject[];
+  @OneToMany(() => BottomToBottom, bottomToBottom => bottomToBottom.axle)
+  bottomToBottom: BottomToBottom[];
 
   @DeleteDateColumn()
   deleted_at: Date;

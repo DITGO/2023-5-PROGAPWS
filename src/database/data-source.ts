@@ -8,7 +8,7 @@ import { DeliveryObjects } from '../models/DeliveryObjects';
 import { Destination } from '../models/Destination';
 import { Resource } from '../models/Resource';
 import { ResourceObject } from '../models/ResourceObject';
-import { BottomToBottom } from '../models/bottomToBottom';
+import { BottomToBottom } from '../models/BottomToBottom';
 import { Goal } from '../models/Goal';
 // eslint-disable-next-line @typescript-eslint/no-var-requires
 require('dotenv').config();
