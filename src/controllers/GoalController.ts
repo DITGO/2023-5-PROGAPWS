@@ -42,7 +42,7 @@ class GoalController {
 
     const all = await goalRepository.find({
       relations: {
-        bottomToBottom: true,
+        resourceObjects: true,
       },
     });
     return response.json(all);

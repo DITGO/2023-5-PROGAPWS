@@ -12,6 +12,8 @@ import { v4 as uuid } from 'uuid'; // Importando o uuid v4 e renomeando pra uuid
 import { Destination } from './Destination';
 import { Objects } from './Objects';
 import { DeliveryObjects } from './DeliveryObjects';
+import { Axle } from './Axle';
+import { Goal } from './Goal';
 
 @Entity('resourcesObjects') // Do TypeORM, pois será uma entidade do banco de dados, utilizada no controller
 export class ResourceObject {
@@ -50,6 +52,16 @@ export class ResourceObject {
     nullable: true,
   })
   settlementDate: string;
+
+  @ManyToOne(() => Axle, axle => axle.resourceObjects, {
+    eager: true,
+  })
+  axle: Axle;
+
+  @ManyToOne(() => Goal, goal => goal.resourceObjects, {
+    eager: true,
+  })
+  goal: Goal;
 
   @ManyToOne(() => Destination, destination => destination.resourcesObjects, {
     eager: true,

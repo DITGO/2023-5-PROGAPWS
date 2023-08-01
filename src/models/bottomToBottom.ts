@@ -3,14 +3,12 @@ import {
   CreateDateColumn,
   DeleteDateColumn,
   Entity,
-  ManyToOne,
   OneToMany,
   PrimaryColumn,
   UpdateDateColumn,
 } from 'typeorm';
 import { v4 as uuid } from 'uuid'; // Importando o uuid v4 e renomeando pra uuid
-import { Axle } from './Axle';
-import { Goal } from './Goal';
+
 import { Destination } from './Destination';
 
 @Entity('bottomToBottom') // Do TypeORM, pois será uma entidade do banco de dados, utilizada no controller
@@ -28,17 +26,15 @@ export class BottomToBottom {
   amount: string;
 
   @Column()
+  estimatedValue: string;
+
+  @Column({
+    nullable: true,
+  })
+  executedValue: string;
+
+  @Column()
   balance: string;
-
-  @ManyToOne(() => Axle, axle => axle.bottomToBottom, {
-    eager: true,
-  })
-  axle: Axle;
-
-  @ManyToOne(() => Goal, goal => goal.bottomToBottom, {
-    eager: true,
-  })
-  goal: Goal;
 
   @OneToMany(() => Destination, Destination => Destination.bottomToBottom)
   destination: Destination[];

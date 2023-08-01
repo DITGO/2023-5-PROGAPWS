@@ -3,14 +3,10 @@ import {
   CreateDateColumn,
   DeleteDateColumn,
   Entity,
-  ManyToOne,
-  OneToMany,
   PrimaryColumn,
   UpdateDateColumn,
 } from 'typeorm';
 import { v4 as uuid } from 'uuid'; // Importando o uuid v4 e renomeando pra uuid
-import { Axle } from './Axle';
-import { Destination } from './Destination';
 
 @Entity('resources') // Do TypeORM, pois será uma entidade do banco de dados, utilizada no controller
 export class Resource {

@@ -6,14 +6,15 @@ import { BottomToBottom } from '../models/bottomToBottom';
 
 class BottomToBottomController {
   async create(request: Request, response: Response, next: NextFunction) {
-    const { goal, source, year, amount, balance, axle } = request.body;
+    const { source, year, amount, balance, estimatedValue, executedValue } =
+      request.body;
 
     const schema = yup.object().shape({
-      goal: yup.string().required(),
       source: yup.string().required(),
       year: yup.string().required(),
       amount: yup.string().required(),
       balance: yup.string().required(),
+      estimatedValue: yup.string().required(),
     });
 
     try {
@@ -28,12 +29,12 @@ class BottomToBottomController {
       APPDataSource.getRepository(BottomToBottom);
 
     const bottomToBottom = bottomToBottomRepository.create({
-      goal,
       source,
       year,
       amount,
       balance,
-      axle,
+      estimatedValue,
+      executedValue,
     });
 
     await bottomToBottomRepository.save(bottomToBottom);
@@ -44,11 +45,7 @@ class BottomToBottomController {
   async all(request: Request, response: Response, next: NextFunction) {
     const bottomToBottomRepository =
       APPDataSource.getRepository(BottomToBottom);
-    const all = await bottomToBottomRepository.find({
-      relations: {
-        axle: true,
-      },
-    });
+    const all = await bottomToBottomRepository.find();
 
     return response.json(all);
   }
@@ -64,15 +61,16 @@ class BottomToBottomController {
   }
 
   async update(request: Request, response: Response, next: NextFunction) {
-    const { goal, source, year, amount, balance, axle } = request.body;
+    const { source, year, amount, balance, estimatedValue, executedValue } =
+      request.body;
     const id = request.params.id;
 
     const schema = yup.object().shape({
-      goal: yup.string().required(),
       source: yup.string().required(),
       year: yup.string().required(),
       amount: yup.string().required(),
       balance: yup.string().required(),
+      estimatedValue: yup.string().required(),
     });
 
     try {
@@ -90,12 +88,12 @@ class BottomToBottomController {
         id,
       },
       {
-        goal,
         source,
         year,
         amount,
         balance,
-        axle,
+        estimatedValue,
+        executedValue,
       },
     );
 

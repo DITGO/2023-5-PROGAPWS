@@ -18,6 +18,8 @@ class ResourceObjectController {
       settlementDate,
       objects,
       destination,
+      axle,
+      goal,
     } = request.body;
 
     const schema = yup.object().shape({
@@ -27,9 +29,6 @@ class ResourceObjectController {
       status: yup.string().required(),
       progress: yup.string().required(),
       processNumber: yup.string().required(),
-      dateCommitted: yup.string().required(),
-      deliveryDate: yup.string().required(),
-      settlementDate: yup.string().required(),
     });
 
     try {
@@ -43,14 +42,6 @@ class ResourceObjectController {
     const resourceObjectRepository =
       APPDataSource.getRepository(ResourceObject);
 
-    // const resourceAlreadyExists = await resourceObjectRepository.findOne({
-    //   where: { processNumber: processNumber },
-    // });
-
-    // if (resourceAlreadyExists) {
-    //   return response.status(400).json({ status: 'Recurso já existe!' });
-    // }
-
     const resourceObject = resourceObjectRepository.create({
       amount,
       unitaryValue,
@@ -60,9 +51,11 @@ class ResourceObjectController {
       processNumber,
       dateCommitted,
       deliveryDate,
-      destination,
       settlementDate,
+      destination,
       objects,
+      axle,
+      goal,
     });
 
     await resourceObjectRepository.save(resourceObject);
@@ -78,6 +71,8 @@ class ResourceObjectController {
       relations: {
         destination: true,
         objects: true,
+        axle: true,
+        goal: true,
       },
     });
 
@@ -108,6 +103,8 @@ class ResourceObjectController {
       settlementDate,
       objects,
       destination,
+      axle,
+      goal,
     } = request.body;
     const id = request.params.id;
 
@@ -118,9 +115,6 @@ class ResourceObjectController {
       status: yup.string().required(),
       progress: yup.string().required(),
       processNumber: yup.string().required(),
-      dateCommitted: yup.string().required(),
-      deliveryDate: yup.string().required(),
-      settlementDate: yup.string().required(),
     });
 
     try {
@@ -150,6 +144,8 @@ class ResourceObjectController {
         destination,
         settlementDate,
         objects,
+        axle,
+        goal,
       },
     );
 
