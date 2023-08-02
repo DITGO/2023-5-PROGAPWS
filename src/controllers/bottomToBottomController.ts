@@ -6,15 +6,13 @@ import { BottomToBottom } from '../models/BottomToBottom';
 
 class BottomToBottomController {
   async create(request: Request, response: Response, next: NextFunction) {
-    const { source, year, amount, balance, estimatedValue, executedValue } =
-      request.body;
+    const { source, year, amount, balance, axle } = request.body;
 
     const schema = yup.object().shape({
       source: yup.string().required(),
       year: yup.string().required(),
       amount: yup.string().required(),
       balance: yup.string().required(),
-      estimatedValue: yup.string().required(),
     });
 
     try {
@@ -33,8 +31,7 @@ class BottomToBottomController {
       year,
       amount,
       balance,
-      estimatedValue,
-      executedValue,
+      axle,
     });
 
     await bottomToBottomRepository.save(bottomToBottom);
@@ -45,7 +42,11 @@ class BottomToBottomController {
   async all(request: Request, response: Response, next: NextFunction) {
     const bottomToBottomRepository =
       APPDataSource.getRepository(BottomToBottom);
-    const all = await bottomToBottomRepository.find();
+    const all = await bottomToBottomRepository.find({
+      relations: {
+        axle: true,
+      },
+    });
 
     return response.json(all);
   }
@@ -61,8 +62,7 @@ class BottomToBottomController {
   }
 
   async update(request: Request, response: Response, next: NextFunction) {
-    const { source, year, amount, balance, estimatedValue, executedValue } =
-      request.body;
+    const { source, year, amount, balance, axle } = request.body;
     const id = request.params.id;
 
     const schema = yup.object().shape({
@@ -70,7 +70,6 @@ class BottomToBottomController {
       year: yup.string().required(),
       amount: yup.string().required(),
       balance: yup.string().required(),
-      estimatedValue: yup.string().required(),
     });
 
     try {
@@ -92,8 +91,7 @@ class BottomToBottomController {
         year,
         amount,
         balance,
-        estimatedValue,
-        executedValue,
+        axle,
       },
     );
 
@@ -117,7 +115,9 @@ class BottomToBottomController {
       bottomToBottomToRemove.id,
     );
     if (!deleteResponse.affected) {
-      return response.status(400).json({ status: 'Recurso não excluido!' });
+      return response
+        .status(400)
+        .json({ status: 'O fundo a fundo não excluido!' });
     }
 
     return response.json(bottomToBottomToRemove);

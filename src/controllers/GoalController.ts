@@ -6,9 +6,11 @@ import { Goal } from '../models/Goal';
 
 class GoalController {
   async create(request: Request, response: Response, next: NextFunction) {
-    const { description } = request.body;
+    const { description, predictedValue, balance } = request.body;
     const schema = yup.object().shape({
       description: yup.string().required(),
+      predictedValue: yup.string().required(),
+      balance: yup.string().required(),
     });
 
     try {
@@ -30,6 +32,8 @@ class GoalController {
 
     const goal = goalRepository.create({
       description,
+      predictedValue,
+      balance,
     });
 
     await goalRepository.save(goal);
@@ -42,7 +46,7 @@ class GoalController {
 
     const all = await goalRepository.find({
       relations: {
-        resourceObjects: true,
+        bottomToBottom: true,
       },
     });
     return response.json(all);
@@ -59,11 +63,13 @@ class GoalController {
   }
 
   async update(request: Request, response: Response, next: NextFunction) {
-    const { description } = request.body;
+    const { description, predictedValue, balance } = request.body;
     const id = request.params.id;
 
     const schema = yup.object().shape({
       description: yup.string().required(),
+      predictedValue: yup.string().required(),
+      balance: yup.string().required(),
     });
 
     try {
@@ -82,6 +88,8 @@ class GoalController {
       },
       {
         description,
+        predictedValue,
+        balance,
       },
     );
 

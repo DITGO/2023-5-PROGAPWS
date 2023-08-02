@@ -13,12 +13,13 @@ class ResourceObjectController {
       status,
       progress,
       processNumber,
+      natureExpense,
+      estimatedValue,
       dateCommitted,
+      executedValue,
       deliveryDate,
       settlementDate,
       objects,
-      destination,
-      axle,
       goal,
     } = request.body;
 
@@ -29,6 +30,8 @@ class ResourceObjectController {
       status: yup.string().required(),
       progress: yup.string().required(),
       processNumber: yup.string().required(),
+      natureExpense: yup.string().required(),
+      estimatedValue: yup.string().required(),
     });
 
     try {
@@ -49,12 +52,13 @@ class ResourceObjectController {
       status,
       progress,
       processNumber,
+      natureExpense,
+      estimatedValue,
       dateCommitted,
+      executedValue,
       deliveryDate,
       settlementDate,
-      destination,
       objects,
-      axle,
       goal,
     });
 
@@ -69,9 +73,7 @@ class ResourceObjectController {
 
     const all = await resourceObjectRepository.find({
       relations: {
-        destination: true,
         objects: true,
-        axle: true,
         goal: true,
       },
     });
@@ -98,12 +100,13 @@ class ResourceObjectController {
       status,
       progress,
       processNumber,
+      natureExpense,
+      estimatedValue,
       dateCommitted,
+      executedValue,
       deliveryDate,
       settlementDate,
       objects,
-      destination,
-      axle,
       goal,
     } = request.body;
     const id = request.params.id;
@@ -115,6 +118,8 @@ class ResourceObjectController {
       status: yup.string().required(),
       progress: yup.string().required(),
       processNumber: yup.string().required(),
+      natureExpense: yup.string().required(),
+      estimatedValue: yup.string().required(),
     });
 
     try {
@@ -139,12 +144,13 @@ class ResourceObjectController {
         status,
         progress,
         processNumber,
+        natureExpense,
+        estimatedValue,
         dateCommitted,
+        executedValue,
         deliveryDate,
-        destination,
         settlementDate,
         objects,
-        axle,
         goal,
       },
     );
