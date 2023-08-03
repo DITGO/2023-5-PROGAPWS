@@ -30,8 +30,8 @@ export class Objects {
   @UpdateDateColumn() // Para já capturar a data e fazer a formatação
   update_at: Date;
 
-  @OneToMany(() => ResourceObject, resourcesObjects => resourcesObjects.objects)
-  resourcesObjects: ResourceObject[];
+  @OneToMany(() => ResourceObject, resourceObjects => resourceObjects.objects)
+  resourceObjects: ResourceObject[];
 
   @ManyToOne(() => Nature, nature => nature.objects, { eager: true })
   nature: Nature;

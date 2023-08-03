@@ -62,13 +62,13 @@ export class ResourceObject {
   })
   settlementDate: string;
 
-  @ManyToOne(() => Goal, goal => goal.resourcesObjects, {
+  @ManyToOne(() => Goal, goal => goal.resourceObjects, {
     eager: true,
     nullable: false,
   })
   goal: Goal;
 
-  @ManyToOne(() => Objects, objetc => objetc.resourcesObjects, {
+  @ManyToOne(() => Objects, objetc => objetc.resourceObjects, {
     eager: true,
     nullable: false,
   })

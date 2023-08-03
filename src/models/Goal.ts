@@ -31,8 +31,8 @@ export class Goal {
   })
   bottomToBottom: BottomToBottom;
 
-  @OneToMany(() => ResourceObject, resourceObject => resourceObject.goal)
-  resourcesObjects: ResourceObject[];
+  @OneToMany(() => ResourceObject, resourceObjects => resourceObjects.goal)
+  resourceObjects: ResourceObject[];
 
   @DeleteDateColumn()
   deleted_at: Date;
