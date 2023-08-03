@@ -1,12 +1,12 @@
 import { NextFunction, Request, Response } from 'express';
 import * as yup from 'yup';
 import { APPDataSource } from '../database/data-source';
-import { Axle } from '../models/Axle';
 import { Goal } from '../models/Goal';
 
 class GoalController {
   async create(request: Request, response: Response, next: NextFunction) {
-    const { description, predictedValue, balance } = request.body;
+    const { description, predictedValue, balance, bottomToBottom } =
+      request.body;
     const schema = yup.object().shape({
       description: yup.string().required(),
       predictedValue: yup.string().required(),
@@ -34,6 +34,7 @@ class GoalController {
       description,
       predictedValue,
       balance,
+      bottomToBottom,
     });
 
     await goalRepository.save(goal);
@@ -63,7 +64,8 @@ class GoalController {
   }
 
   async update(request: Request, response: Response, next: NextFunction) {
-    const { description, predictedValue, balance } = request.body;
+    const { description, predictedValue, balance, bottomToBottom } =
+      request.body;
     const id = request.params.id;
 
     const schema = yup.object().shape({
@@ -90,6 +92,7 @@ class GoalController {
         description,
         predictedValue,
         balance,
+        bottomToBottom,
       },
     );
 

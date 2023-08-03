@@ -13,7 +13,7 @@ import { Objects } from './Objects';
 import { Goal } from './Goal';
 import { Destination } from './Destination';
 
-@Entity('resourcesObjects') // Do TypeORM, pois será uma entidade do banco de dados, utilizada no controller
+@Entity('resourceObjects') // Do TypeORM, pois será uma entidade do banco de dados, utilizada no controller
 export class ResourceObject {
   @PrimaryColumn()
   readonly id: string; // o readonly para não deixar quem tem informação do id mudar o valor, nesse caso o controller poderá só ler
@@ -74,7 +74,7 @@ export class ResourceObject {
   })
   objects: Objects;
 
-  @OneToMany(() => Destination, destination => destination.resourcesObjects)
+  @OneToMany(() => Destination, destination => destination.resourceObjects)
   destinations: Destination[];
 
   @DeleteDateColumn()

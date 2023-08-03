@@ -4,11 +4,13 @@ import {
   DeleteDateColumn,
   Entity,
   ManyToOne,
+  OneToMany,
   PrimaryColumn,
   UpdateDateColumn,
 } from 'typeorm';
 import { v4 as uuid } from 'uuid'; // Importando o uuid v4 e renomeando pra uuid
 import { ResourceObject } from './ResourceObject';
+import { DeliveryObjects } from './DeliveryObjects';
 
 @Entity('destinations') // Do TypeORM, pois será uma entidade do banco de dados, utilizada no controller
 export class Destination {
@@ -24,9 +26,15 @@ export class Destination {
   @ManyToOne(
     () => ResourceObject,
     resourceObjects => resourceObjects.destinations,
-    { eager: true },
+    { eager: true, nullable: false },
   )
-  resourcesObjects: ResourceObject;
+  resourceObjects: ResourceObject;
+
+  @OneToMany(
+    () => DeliveryObjects,
+    deliveryObjects => deliveryObjects.destinations,
+  )
+  deliveryObjects: DeliveryObjects[];
 
   @DeleteDateColumn()
   deleted_at: Date;

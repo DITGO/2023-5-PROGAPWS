@@ -6,7 +6,7 @@ import { DeliveryObjects } from '../models/DeliveryObjects';
 
 class DeliveryObjectController {
   async create(request: Request, response: Response, next: NextFunction) {
-    const { deliveryDate, amountDelivery, observation, resourceObjects } =
+    const { deliveryDate, amountDelivery, observation, destinations } =
       request.body;
 
     const schema = yup.object().shape({
@@ -30,7 +30,7 @@ class DeliveryObjectController {
       deliveryDate,
       amountDelivery,
       observation,
-      resourceObjects,
+      destinations,
     });
 
     await deliveryObjectRepository.save(deliveryObject);
@@ -40,11 +40,11 @@ class DeliveryObjectController {
 
   async all(request: Request, response: Response, next: NextFunction) {
     const deliveryObjectRepository =
-      APPDataSource.getRepository(ResourceObject);
+      APPDataSource.getRepository(DeliveryObjects);
 
     const all = await deliveryObjectRepository.find({
       relations: {
-        deliveryObjects: true,
+        destinations: true,
       },
     });
 

@@ -1,12 +1,11 @@
 import { NextFunction, Request, Response } from 'express';
 import * as yup from 'yup';
 import { APPDataSource } from '../database/data-source';
-import jwt from 'jsonwebtoken';
 import { Destination } from '../models/Destination';
 
 class DestinationController {
   async create(request: Request, response: Response, next: NextFunction) {
-    const { unitId, subUnitId, resourcesObjects } = request.body;
+    const { unitId, subUnitId, resourceObjects } = request.body;
 
     const schema = yup.object().shape({
       unitId: yup.string().required(),
@@ -34,9 +33,8 @@ class DestinationController {
     const destination = destinationObjectRepository.create({
       unitId,
       subUnitId,
-      resourcesObjects,
+      resourceObjects,
     });
-
     await destinationObjectRepository.save(destination);
 
     return response.status(201).json(destination);
@@ -48,7 +46,7 @@ class DestinationController {
 
     const all = await destinationObjectRepository.find({
       relations: {
-        resourcesObjects: true,
+        resourceObjects: true,
       },
     });
 
@@ -69,7 +67,7 @@ class DestinationController {
   }
 
   async update(request: Request, response: Response, next: NextFunction) {
-    const { unitId, subUnitId, resourcesObjects } = request.body;
+    const { unitId, subUnitId, resourceObjects } = request.body;
     const id = request.params.id;
 
     const schema = yup.object().shape({
@@ -95,7 +93,7 @@ class DestinationController {
       {
         unitId,
         subUnitId,
-        resourcesObjects,
+        resourceObjects,
       },
     );
 
@@ -111,14 +109,16 @@ class DestinationController {
     });
 
     if (!destinationToRemove) {
-      return response.status(400).json({ status: 'Recurso não encontrado!' });
+      return response
+        .status(400)
+        .json({ status: 'Destinação não encontrado!' });
     }
 
     const deleteResponse = await destinationObjectRepository.softDelete(
       destinationToRemove.id,
     );
     if (!deleteResponse.affected) {
-      return response.status(400).json({ status: 'Recurso não excluido!' });
+      return response.status(400).json({ status: 'Destinação não excluido!' });
     }
 
     return response.json(destinationToRemove);
@@ -134,7 +134,9 @@ class DestinationController {
     });
 
     if (!destinationToRestore) {
-      return response.status(400).json({ status: 'Recurso não encontrado!' });
+      return response
+        .status(400)
+        .json({ status: 'Destinação não encontrado!' });
     }
 
     const restoreResponse = await destinationObjectRepository.restore(
@@ -142,36 +144,10 @@ class DestinationController {
     );
 
     if (restoreResponse.affected) {
-      return response.status(200).json({ status: 'Recurso recuperado!' });
+      return response.status(200).json({ status: 'Destinação recuperado!' });
     }
 
     return response.json(destinationObjectRepository);
-  }
-
-  async paginar(request: Request, response: Response, next: NextFunction) {
-    const destinationObjectRepository =
-      APPDataSource.getRepository(Destination);
-
-    const { perPage, page, column } = request.query;
-    const skip = parseInt(page.toString()) * parseInt(perPage.toString());
-
-    const all = await destinationObjectRepository
-      .createQueryBuilder('object')
-      .take(parseInt(perPage.toString()))
-      .skip(skip)
-      .addOrderBy(column.toString(), 'ASC')
-      .getMany();
-
-    return response.json(all);
-  }
-
-  async token(request: Request, response: Response, next: NextFunction) {
-    const id = 1;
-    const token = jwt.sign({ id }, process.env.SECRET, {
-      expiresIn: 43200,
-    });
-
-    return response.json({ auth: true, token });
   }
 }
 
