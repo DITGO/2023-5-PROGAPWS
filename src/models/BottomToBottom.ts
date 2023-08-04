@@ -34,6 +34,7 @@ export class BottomToBottom {
 
   @ManyToOne(() => Axle, axle => axle.bottomToBottom, {
     eager: true,
+    nullable: false,
   })
   axle: Axle;
 
