@@ -8,8 +8,8 @@ class DestinationController {
     const { unitId, subUnitId, resourceObjects } = request.body;
 
     const schema = yup.object().shape({
-      unitId: yup.string().required(),
-      subUnitId: yup.string().required(),
+      unitId: yup.number().required(),
+      subUnitId: yup.string(),
     });
     try {
       await schema.validate(request.body, { abortEarly: false });
@@ -21,14 +21,6 @@ class DestinationController {
 
     const destinationObjectRepository =
       APPDataSource.getRepository(Destination);
-
-    const destinationAlreadyExists = await destinationObjectRepository.findOne({
-      where: { unitId: unitId },
-    });
-
-    if (destinationAlreadyExists) {
-      return response.status(400).json({ status: 'Destinação já existe!' });
-    }
 
     const destination = destinationObjectRepository.create({
       unitId,
@@ -71,8 +63,8 @@ class DestinationController {
     const id = request.params.id;
 
     const schema = yup.object().shape({
-      unitId: yup.string().required(),
-      subUnitId: yup.string().required(),
+      unitId: yup.number().required(),
+      subUnitId: yup.string(),
     });
 
     try {

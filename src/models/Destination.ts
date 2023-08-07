@@ -18,9 +18,9 @@ export class Destination {
   readonly id: string; // o readonly para não deixar quem tem informação do id mudar o valor, nesse caso o controller poderá só ler
 
   @Column()
-  unitId: string;
+  unitId: number;
 
-  @Column()
+  @Column({ nullable: true })
   subUnitId: string;
 
   @ManyToOne(
