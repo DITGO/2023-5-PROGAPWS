@@ -1,7 +1,6 @@
 import { NextFunction, Request, Response } from 'express';
 import * as yup from 'yup';
 import { APPDataSource } from '../database/data-source';
-import jwt from 'jsonwebtoken';
 import { ResourceObject } from '../models/ResourceObject';
 
 class ResourceObjectController {
@@ -9,29 +8,27 @@ class ResourceObjectController {
     const {
       amount,
       unitaryValue,
-      totalValue,
+      estimatedTotalValue,
       status,
       progress,
       processNumber,
       natureExpense,
-      estimatedValue,
-      dateCommitted,
+      commitmentDate,
+      acquisitionMode,
       executedValue,
-      deliveryDate,
-      settlementDate,
       objects,
       goal,
     } = request.body;
 
     const schema = yup.object().shape({
-      amount: yup.string().required(),
-      unitaryValue: yup.string().required(),
-      totalValue: yup.string().required(),
-      status: yup.string().required(),
-      progress: yup.string().required(),
-      processNumber: yup.string().required(),
-      natureExpense: yup.string().required(),
-      estimatedValue: yup.string().required(),
+      amount: yup.string(),
+      unitaryValue: yup.string(),
+      estimatedTotalValue: yup.string(),
+      status: yup.string(),
+      progress: yup.string(),
+      processNumber: yup.string(),
+      natureExpense: yup.string(),
+      acquisitionMode: yup.string(),
     });
 
     try {
@@ -48,16 +45,14 @@ class ResourceObjectController {
     const resourceObject = resourceObjectRepository.create({
       amount,
       unitaryValue,
-      totalValue,
+      estimatedTotalValue,
       status,
       progress,
       processNumber,
       natureExpense,
-      estimatedValue,
-      dateCommitted,
+      commitmentDate,
       executedValue,
-      deliveryDate,
-      settlementDate,
+      acquisitionMode,
       objects,
       goal,
     });
@@ -95,30 +90,28 @@ class ResourceObjectController {
     const {
       amount,
       unitaryValue,
-      totalValue,
+      estimatedTotalValue,
       status,
       progress,
       processNumber,
+      acquisitionMode,
       natureExpense,
-      estimatedValue,
-      dateCommitted,
+      commitmentDate,
       executedValue,
-      deliveryDate,
-      settlementDate,
       objects,
       goal,
     } = request.body;
     const id = request.params.id;
 
     const schema = yup.object().shape({
-      amount: yup.string().required(),
-      unitaryValue: yup.string().required(),
-      totalValue: yup.string().required(),
-      status: yup.string().required(),
-      progress: yup.string().required(),
-      processNumber: yup.string().required(),
-      natureExpense: yup.string().required(),
-      estimatedValue: yup.string().required(),
+      amount: yup.string(),
+      unitaryValue: yup.string(),
+      estimatedTotalValue: yup.string(),
+      status: yup.string(),
+      progress: yup.string(),
+      processNumber: yup.string(),
+      natureExpense: yup.string(),
+      acquisitionMode: yup.string(),
     });
 
     try {
@@ -139,16 +132,14 @@ class ResourceObjectController {
       {
         amount,
         unitaryValue,
-        totalValue,
+        estimatedTotalValue,
         status,
         progress,
         processNumber,
         natureExpense,
-        estimatedValue,
-        dateCommitted,
+        acquisitionMode,
+        commitmentDate,
         executedValue,
-        deliveryDate,
-        settlementDate,
         objects,
         goal,
       },

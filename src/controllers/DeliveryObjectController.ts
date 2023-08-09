@@ -1,18 +1,18 @@
 import { NextFunction, Request, Response } from 'express';
 import * as yup from 'yup';
 import { APPDataSource } from '../database/data-source';
-import { ResourceObject } from '../models/ResourceObject';
 import { DeliveryObjects } from '../models/DeliveryObjects';
 
 class DeliveryObjectController {
   async create(request: Request, response: Response, next: NextFunction) {
-    const { deliveryDate, amountDelivery, observation, destinations } =
+    const { unitId, amount, deliveryDate, settlementDate, resourceObjects } =
       request.body;
 
     const schema = yup.object().shape({
-      deliveryDate: yup.string().required(),
-      amountDelivery: yup.string().required(),
-      observation: yup.string().required(),
+      unitId: yup.number(),
+      amount: yup.string(),
+      deliveryDate: yup.string(),
+      settlementDate: yup.string(),
     });
 
     try {
@@ -27,10 +27,11 @@ class DeliveryObjectController {
       APPDataSource.getRepository(DeliveryObjects);
 
     const deliveryObject = deliveryObjectRepository.create({
+      unitId,
+      amount,
       deliveryDate,
-      amountDelivery,
-      observation,
-      destinations,
+      settlementDate,
+      resourceObjects,
     });
 
     await deliveryObjectRepository.save(deliveryObject);
@@ -44,11 +45,50 @@ class DeliveryObjectController {
 
     const all = await deliveryObjectRepository.find({
       relations: {
-        destinations: true,
+        resourceObjects: true,
       },
     });
 
     return response.json(all);
+  }
+
+  async update(request: Request, response: Response, next: NextFunction) {
+    const { unitId, amount, deliveryDate, settlementDate, resourceObjects } =
+      request.body;
+    const id = request.params.id;
+
+    const schema = yup.object().shape({
+      unitId: yup.number(),
+      amount: yup.string(),
+      deliveryDate: yup.string(),
+      settlementDate: yup.string(),
+    });
+
+    try {
+      await schema.validate(request.body, { abortEarly: false });
+    } catch (err) {
+      return response
+        .status(400)
+        .json({ status: 'Erro de validação dos campos!' });
+    }
+
+    const deliveryObjectRepository =
+      APPDataSource.getRepository(DeliveryObjects);
+
+    const deliveryObject = await deliveryObjectRepository.update(
+      {
+        id,
+      },
+      {
+        unitId,
+        amount,
+        deliveryDate,
+        settlementDate,
+        resourceObjects,
+      },
+    );
+
+    return response.status(201).json(deliveryObject);
   }
 
   // EXCLUÇÃO PERMANETE

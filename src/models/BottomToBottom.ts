@@ -17,24 +17,21 @@ export class BottomToBottom {
   @PrimaryColumn()
   readonly id: string; // o readonly para não deixar quem tem informação do id mudar o valor, nesse caso o controller poderá só ler
 
-  @Column()
+  @Column({ nullable: true })
   source: string;
 
-  @Column()
+  @Column({ nullable: true })
   year: string;
 
-  @Column()
+  @Column({ nullable: true })
   amount: string;
-
-  @Column()
-  balance: string;
 
   @OneToMany(() => Goal, goal => goal.bottomToBottom)
   goal: Goal[];
 
   @ManyToOne(() => Axle, axle => axle.bottomToBottom, {
     eager: true,
-    nullable: false,
+    nullable: true,
   })
   axle: Axle;
 

@@ -8,9 +8,9 @@ class GoalController {
     const { description, predictedValue, balance, bottomToBottom } =
       request.body;
     const schema = yup.object().shape({
-      description: yup.string().required(),
-      predictedValue: yup.string().required(),
-      balance: yup.string().required(),
+      description: yup.string(),
+      predictedValue: yup.string(),
+      balance: yup.string(),
     });
 
     try {
@@ -69,9 +69,9 @@ class GoalController {
     const id = request.params.id;
 
     const schema = yup.object().shape({
-      description: yup.string().required(),
-      predictedValue: yup.string().required(),
-      balance: yup.string().required(),
+      description: yup.string(),
+      predictedValue: yup.string(),
+      balance: yup.string(),
     });
 
     try {

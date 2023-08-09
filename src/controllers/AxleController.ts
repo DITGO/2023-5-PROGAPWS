@@ -8,7 +8,7 @@ class AxleController {
   async create(request: Request, response: Response, next: NextFunction) {
     const { name, description } = request.body;
     const schema = yup.object().shape({
-      name: yup.string().required(),
+      name: yup.string(),
       description: yup.string(),
     });
 
@@ -66,7 +66,7 @@ class AxleController {
     const id = request.params.id;
 
     const schema = yup.object().shape({
-      name: yup.string().required(),
+      name: yup.string(),
       description: yup.string(),
     });
 

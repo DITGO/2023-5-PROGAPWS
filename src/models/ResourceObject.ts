@@ -11,36 +11,36 @@ import {
 import { v4 as uuid } from 'uuid'; // Importando o uuid v4 e renomeando pra uuid
 import { Objects } from './Objects';
 import { Goal } from './Goal';
-import { Destination } from './Destination';
+import { DeliveryObjects } from './DeliveryObjects';
 
 @Entity('resourceObjects') // Do TypeORM, pois será uma entidade do banco de dados, utilizada no controller
 export class ResourceObject {
   @PrimaryColumn()
   readonly id: string; // o readonly para não deixar quem tem informação do id mudar o valor, nesse caso o controller poderá só ler
 
-  @Column() // Poderia passar o nome da coluna: @Column("name"), mas o atributo já está com mesmo nome
+  @Column({ nullable: true })
   amount: string;
 
-  @Column()
+  @Column({ nullable: true })
   unitaryValue: string;
 
-  @Column()
-  totalValue: string;
+  @Column({ nullable: true })
+  estimatedTotalValue: string;
 
-  @Column()
+  @Column({ nullable: true })
   status: string;
 
-  @Column()
+  @Column({ nullable: true })
   progress: string;
 
-  @Column()
+  @Column({ nullable: true })
   processNumber: string;
 
-  @Column()
+  @Column({ nullable: true })
   natureExpense: string;
 
-  @Column()
-  estimatedValue: string;
+  @Column({ nullable: true })
+  acquisitionMode: string;
 
   @Column({
     nullable: true,
@@ -50,17 +50,7 @@ export class ResourceObject {
   @Column({
     nullable: true,
   })
-  dateCommitted: string;
-
-  @Column({
-    nullable: true,
-  })
-  deliveryDate: string;
-
-  @Column({
-    nullable: true,
-  })
-  settlementDate: string;
+  commitmentDate: string;
 
   @ManyToOne(() => Goal, goal => goal.resourceObjects, {
     eager: true,
@@ -74,8 +64,11 @@ export class ResourceObject {
   })
   objects: Objects;
 
-  @OneToMany(() => Destination, destination => destination.resourceObjects)
-  destinations: Destination[];
+  @OneToMany(
+    () => DeliveryObjects,
+    deliveryObjects => deliveryObjects.resourceObjects,
+  )
+  deliveryObjects: DeliveryObjects[];
 
   @DeleteDateColumn()
   deleted_at: Date;

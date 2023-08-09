@@ -4,7 +4,6 @@ import { ModelController } from './controllers/ModelController';
 import { NatureController } from './controllers/NatureController';
 import { ObjectsController } from './controllers/ObjectsController';
 // import { ResourceController } from './controllers/ResourceController';
-import { DestinationController } from './controllers/DestinationController';
 import { DeliveryObjectController } from './controllers/DeliveryObjectController';
 import { ResourceObjectController } from './controllers/ResourceObjectController';
 import { verifyToken } from './Utils/functionsToken';
@@ -21,7 +20,6 @@ const axleController = new AxleController();
 const bottomToBottomController = new BottomToBottomController();
 const goalController = new GoalController();
 
-const destinationController = new DestinationController();
 const resourceObjectController = new ResourceObjectController();
 const deliveryController = new DeliveryObjectController();
 
@@ -74,15 +72,6 @@ router.put('/axles/:id', verifyToken, axleController.update);
 router.delete('/axles/:id', verifyToken, axleController.remove);
 router.patch('/axles/:id', verifyToken, axleController.restore);
 
-//rotas de destinação teste
-router.post('/destinations', verifyToken, destinationController.create);
-router.get('/destinations', verifyToken, destinationController.all);
-
-router.get('/destinations/:id', verifyToken, destinationController.one);
-router.put('/destinations/:id', verifyToken, destinationController.update);
-router.delete('/destinations/:id', verifyToken, destinationController.remove);
-router.patch('/destinations/:id', verifyToken, destinationController.restore);
-
 // objetos do recursos
 router.post('/resourceobjects', verifyToken, resourceObjectController.create);
 router.get('/resourceobjects', verifyToken, resourceObjectController.all);
@@ -130,7 +119,8 @@ router.patch('/model/:id', verifyToken, modelController.restore);
 //Model Routes
 router.post('/delivery', verifyToken, deliveryController.create);
 router.get('/delivery', verifyToken, deliveryController.all);
-router.get('/delivery', verifyToken, deliveryController.one);
+router.put('/delivery/:id', verifyToken, deliveryController.update);
+router.get('/delivery/:id', verifyToken, deliveryController.one);
 router.delete('/delivery/:id', verifyToken, deliveryController.remove);
 
 export { router }; // Retornando as rotas preenchidas para o server.ts

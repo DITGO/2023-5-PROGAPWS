@@ -5,7 +5,6 @@ import { Nature } from '../models/Nature';
 import { Model } from '../models/Model';
 import { Axle } from '../models/Axle';
 import { DeliveryObjects } from '../models/DeliveryObjects';
-import { Destination } from '../models/Destination';
 import { Resource } from '../models/Resource';
 import { ResourceObject } from '../models/ResourceObject';
 import { BottomToBottom } from '../models/BottomToBottom';
@@ -28,7 +27,6 @@ export const APPDataSource = new DataSource({
     Model,
     Axle,
     DeliveryObjects,
-    Destination,
     Resource,
     ResourceObject,
     BottomToBottom,

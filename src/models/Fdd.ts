@@ -9,23 +9,21 @@ import {
 } from 'typeorm';
 import { v4 as uuid } from 'uuid'; // Importando o uuid v4 e renomeando pra uuid
 
-import { Destination } from './Destination';
-
 @Entity('fdd') // Do TypeORM, pois será uma entidade do banco de dados, utilizada no controller
 export class FDD {
   @PrimaryColumn()
   readonly id: string; // o readonly para não deixar quem tem informação do id mudar o valor, nesse caso o controller poderá só ler
 
-  @Column()
+  @Column({ nullable: true })
   source: string;
 
-  @Column()
+  @Column({ nullable: true })
   year: string;
 
-  @Column()
+  @Column({ nullable: true })
   amount: string;
 
-  @Column()
+  @Column({ nullable: true })
   estimatedValue: string;
 
   @Column({

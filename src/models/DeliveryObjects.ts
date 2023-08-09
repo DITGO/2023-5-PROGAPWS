@@ -7,27 +7,34 @@ import {
   UpdateDateColumn,
 } from 'typeorm';
 import { v4 as uuid } from 'uuid'; // Importando o uuid v4 e renomeando pra uuid
-import { Destination } from './Destination';
+import { ResourceObject } from './ResourceObject';
 
 @Entity('deliveryObjects') // Do TypeORM, pois será uma entidade do banco de dados, utilizada no controller
 export class DeliveryObjects {
   @PrimaryColumn()
   readonly id: string; // o readonly para não deixar quem tem informação do id mudar o valor, nesse caso o controller poderá só ler
 
-  @Column() // Poderia passar o nome da coluna: @Column("name"), mas o atributo já está com mesmo nome
+  @Column({ nullable: true })
+  unitId: number;
+
+  @Column({ nullable: true })
+  amount: string;
+
+  @Column({ nullable: true })
   deliveryDate: string;
 
-  @Column()
-  amountDelivery: string;
+  @Column({ nullable: true })
+  settlementDate: string;
 
-  @Column()
-  observation: string;
-
-  @ManyToOne(() => Destination, destinations => destinations.deliveryObjects, {
-    eager: true,
-    nullable: false,
-  })
-  destinations: Destination;
+  @ManyToOne(
+    () => ResourceObject,
+    resourceObjects => resourceObjects.deliveryObjects,
+    {
+      eager: true,
+      nullable: true,
+    },
+  )
+  resourceObjects: ResourceObject;
 
   @CreateDateColumn() // Para já capturar a data e fazer a formatação
   created_at: Date;

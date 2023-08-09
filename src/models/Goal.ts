@@ -17,13 +17,13 @@ export class Goal {
   @PrimaryColumn()
   readonly id: string;
 
-  @Column()
+  @Column({ nullable: true })
   description: string;
 
-  @Column()
+  @Column({ nullable: true })
   predictedValue: string;
 
-  @Column()
+  @Column({ nullable: true })
   balance: string;
 
   @ManyToOne(() => BottomToBottom, bottomToBottom => bottomToBottom.goal, {
