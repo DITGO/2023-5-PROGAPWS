@@ -9,10 +9,10 @@ class DeliveryObjectController {
       request.body;
 
     const schema = yup.object().shape({
-      unitId: yup.number(),
-      amount: yup.string(),
-      deliveryDate: yup.string(),
-      settlementDate: yup.string(),
+      unitId: yup.number().nullable(),
+      amount: yup.string().nullable(),
+      deliveryDate: yup.string().nullable(),
+      settlementDate: yup.string().nullable(),
     });
 
     try {
@@ -58,10 +58,10 @@ class DeliveryObjectController {
     const id = request.params.id;
 
     const schema = yup.object().shape({
-      unitId: yup.number(),
-      amount: yup.string(),
-      deliveryDate: yup.string(),
-      settlementDate: yup.string(),
+      unitId: yup.number().nullable(),
+      amount: yup.string().nullable(),
+      deliveryDate: yup.string().nullable(),
+      settlementDate: yup.string().nullable(),
     });
 
     try {
@@ -69,7 +69,7 @@ class DeliveryObjectController {
     } catch (err) {
       return response
         .status(400)
-        .json({ status: 'Erro de validação dos campos!' });
+        .json({ status: 'Erro de validação dos campos!', errors: err.errors });
     }
 
     const deliveryObjectRepository =

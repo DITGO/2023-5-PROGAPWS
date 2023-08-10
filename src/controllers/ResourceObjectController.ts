@@ -21,14 +21,14 @@ class ResourceObjectController {
     } = request.body;
 
     const schema = yup.object().shape({
-      amount: yup.string(),
-      unitaryValue: yup.string(),
-      estimatedTotalValue: yup.string(),
-      status: yup.string(),
-      progress: yup.string(),
-      processNumber: yup.string(),
-      natureExpense: yup.string(),
-      acquisitionMode: yup.string(),
+      amount: yup.string().nullable(),
+      unitaryValue: yup.string().nullable(),
+      estimatedTotalValue: yup.string().nullable(),
+      status: yup.string().nullable(),
+      progress: yup.string().nullable(),
+      processNumber: yup.string().nullable(),
+      natureExpense: yup.string().nullable(),
+      acquisitionMode: yup.string().nullable(),
     });
 
     try {
@@ -104,14 +104,14 @@ class ResourceObjectController {
     const id = request.params.id;
 
     const schema = yup.object().shape({
-      amount: yup.string(),
-      unitaryValue: yup.string(),
-      estimatedTotalValue: yup.string(),
-      status: yup.string(),
-      progress: yup.string(),
-      processNumber: yup.string(),
-      natureExpense: yup.string(),
-      acquisitionMode: yup.string(),
+      amount: yup.string().nullable(),
+      unitaryValue: yup.string().nullable(),
+      estimatedTotalValue: yup.string().nullable(),
+      status: yup.string().nullable(),
+      progress: yup.string().nullable(),
+      processNumber: yup.string().nullable(),
+      natureExpense: yup.string().nullable(),
+      acquisitionMode: yup.string().nullable(),
     });
 
     try {

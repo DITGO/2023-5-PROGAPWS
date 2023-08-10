@@ -9,9 +9,9 @@ class BottomToBottomController {
     const { source, year, amount, balance, axle } = request.body;
 
     const schema = yup.object().shape({
-      source: yup.string(),
-      year: yup.string(),
-      amount: yup.string(),
+      source: yup.string().nullable(),
+      year: yup.string().nullable(),
+      amount: yup.string().nullable(),
     });
 
     try {
@@ -64,9 +64,9 @@ class BottomToBottomController {
     const id = request.params.id;
 
     const schema = yup.object().shape({
-      source: yup.string(),
-      year: yup.string(),
-      amount: yup.string(),
+      source: yup.string().nullable(),
+      year: yup.string().nullable(),
+      amount: yup.string().nullable(),
     });
 
     try {
