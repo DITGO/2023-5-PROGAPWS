@@ -29,6 +29,8 @@ class ResourceObjectController {
       processNumber: yup.string().nullable(),
       natureExpense: yup.string().nullable(),
       acquisitionMode: yup.string().nullable(),
+      commitmentDate: yup.string().nullable(),
+      executedValue: yup.string().nullable(),
     });
 
     try {
@@ -112,6 +114,8 @@ class ResourceObjectController {
       processNumber: yup.string().nullable(),
       natureExpense: yup.string().nullable(),
       acquisitionMode: yup.string().nullable(),
+      commitmentDate: yup.string().nullable(),
+      executedValue: yup.string().nullable(),
     });
 
     try {
