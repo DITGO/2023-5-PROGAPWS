@@ -3,7 +3,7 @@ import * as yup from 'yup';
 import { APPDataSource } from '../database/data-source';
 import { DeliveryObjects } from '../models/DeliveryObjects';
 
-class DeliveryObjectController {
+class DeliveryObjectControllers {
   async create(request: Request, response: Response, next: NextFunction) {
     const { unitId, amount, deliveryDate, settlementDate, resourceObjects } =
       request.body;
@@ -120,4 +120,4 @@ class DeliveryObjectController {
   }
 }
 
-export { DeliveryObjectController };
+export { DeliveryObjectControllers };

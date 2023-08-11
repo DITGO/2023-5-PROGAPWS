@@ -1,44 +1,27 @@
 import {
   Column,
   CreateDateColumn,
-  DeleteDateColumn,
   Entity,
   OneToMany,
   PrimaryColumn,
   UpdateDateColumn,
 } from 'typeorm';
 import { v4 as uuid } from 'uuid'; // Importando o uuid v4 e renomeando pra uuid
+import { Covenants } from './Covenants';
 
-@Entity('fdd') // Do TypeORM, pois será uma entidade do banco de dados, utilizada no controller
-export class FDD {
+@Entity('grantor')
+export class Grantor {
   @PrimaryColumn()
-  readonly id: string; // o readonly para não deixar quem tem informação do id mudar o valor, nesse caso o controller poderá só ler
+  readonly id: string;
 
   @Column({ nullable: true })
-  source: string;
+  name: string;
 
   @Column({ nullable: true })
-  year: string;
+  contributionValue: string;
 
-  @Column({ nullable: true })
-  amount: string;
-
-  @Column({ nullable: true })
-  estimatedValue: string;
-
-  @Column({
-    nullable: true,
-  })
-  executedValue: string;
-
-  @Column()
-  balance: string;
-
-  // @OneToMany(() => Destination, Destination => Destination.bottomToBottom)
-  // destination: Destination[];
-
-  @DeleteDateColumn()
-  deleted_at: Date;
+  @OneToMany(() => Covenants, covenants => covenants.grantor)
+  covenants: Covenants[];
 
   @CreateDateColumn() // Para já capturar a data e fazer a formatação
   created_at: Date;

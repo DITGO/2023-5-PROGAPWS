@@ -9,6 +9,9 @@ import { Resource } from '../models/Resource';
 import { ResourceObject } from '../models/ResourceObject';
 import { BottomToBottom } from '../models/BottomToBottom';
 import { Goal } from '../models/Goal';
+import { Covenants } from '../models/Covenants';
+import { Grantor } from '../models/Grantor';
+import { DestinationObjects } from '../models/DestinationObjects';
 // eslint-disable-next-line @typescript-eslint/no-var-requires
 require('dotenv').config();
 
@@ -30,7 +33,10 @@ export const APPDataSource = new DataSource({
     Resource,
     ResourceObject,
     BottomToBottom,
+    Covenants,
     Goal,
+    Grantor,
+    DestinationObjects,
   ],
   subscribers: [],
 });

@@ -12,6 +12,8 @@ import { v4 as uuid } from 'uuid'; // Importando o uuid v4 e renomeando pra uuid
 import { Objects } from './Objects';
 import { Goal } from './Goal';
 import { DeliveryObjects } from './DeliveryObjects';
+import { DestinationObjects } from './DestinationObjects';
+import { Covenants } from './Covenants';
 
 @Entity('resourceObjects') // Do TypeORM, pois será uma entidade do banco de dados, utilizada no controller
 export class ResourceObject {
@@ -52,15 +54,21 @@ export class ResourceObject {
   })
   commitmentDate: string;
 
+  @ManyToOne(() => Covenants, covenants => covenants.resourceObjects, {
+    eager: true,
+    nullable: true,
+  })
+  covenants: Covenants;
+
   @ManyToOne(() => Goal, goal => goal.resourceObjects, {
     eager: true,
-    nullable: false,
+    nullable: true,
   })
   goal: Goal;
 
   @ManyToOne(() => Objects, objetc => objetc.resourceObjects, {
     eager: true,
-    nullable: false,
+    nullable: true,
   })
   objects: Objects;
 
@@ -69,6 +77,12 @@ export class ResourceObject {
     deliveryObjects => deliveryObjects.resourceObjects,
   )
   deliveryObjects: DeliveryObjects[];
+
+  @OneToMany(
+    () => DestinationObjects,
+    destinationObjects => destinationObjects.resourceObjects,
+  )
+  destinationObjects: DestinationObjects[];
 
   @DeleteDateColumn()
   deleted_at: Date;

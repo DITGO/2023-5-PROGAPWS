@@ -16,6 +16,7 @@ class ResourceObjectController {
       commitmentDate,
       acquisitionMode,
       executedValue,
+      covenants,
       objects,
       goal,
     } = request.body;
@@ -55,6 +56,7 @@ class ResourceObjectController {
       commitmentDate,
       executedValue,
       acquisitionMode,
+      covenants,
       objects,
       goal,
     });
@@ -71,6 +73,7 @@ class ResourceObjectController {
       relations: {
         objects: true,
         goal: true,
+        covenants: true,
       },
     });
 
@@ -100,6 +103,7 @@ class ResourceObjectController {
       natureExpense,
       commitmentDate,
       executedValue,
+      covenants,
       objects,
       goal,
     } = request.body;
@@ -144,6 +148,7 @@ class ResourceObjectController {
         acquisitionMode,
         commitmentDate,
         executedValue,
+        covenants,
         objects,
         goal,
       },
