@@ -100,14 +100,18 @@ class GrantorController {
     });
 
     if (!grantorToRemove) {
-      return response.status(400).json({ status: 'Grantor não encontrada!' });
+      return response
+        .status(400)
+        .json({ status: 'Concedente não encontrada!' });
     }
 
     const deleteResponse = await grantorRepository.softDelete(
       grantorToRemove.id,
     );
     if (!deleteResponse.affected) {
-      return response.status(400).json({ status: 'Grantor não foi excluido!' });
+      return response
+        .status(400)
+        .json({ status: 'Concedente não foi excluido!' });
     }
 
     return response.json(grantorToRemove);

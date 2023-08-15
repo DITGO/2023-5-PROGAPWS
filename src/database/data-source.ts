@@ -12,6 +12,7 @@ import { Goal } from '../models/Goal';
 import { Covenants } from '../models/Covenants';
 import { Grantor } from '../models/Grantor';
 import { DestinationObjects } from '../models/DestinationObjects';
+import { CovenantGrantor } from '../models/CovenantGrantor';
 // eslint-disable-next-line @typescript-eslint/no-var-requires
 require('dotenv').config();
 
@@ -37,6 +38,7 @@ export const APPDataSource = new DataSource({
     Goal,
     Grantor,
     DestinationObjects,
+    CovenantGrantor,
   ],
   subscribers: [],
 });

@@ -1,8 +1,9 @@
 import {
   Column,
   CreateDateColumn,
+  DeleteDateColumn,
   Entity,
-  OneToMany,
+  ManyToMany,
   PrimaryColumn,
   UpdateDateColumn,
 } from 'typeorm';
@@ -20,8 +21,11 @@ export class Grantor {
   @Column({ nullable: true })
   contributionValue: string;
 
-  @OneToMany(() => Covenants, covenants => covenants.grantor)
-  covenants: Covenants[];
+  @ManyToMany(() => Covenants, covenant => covenant.covenantGrantors)
+  covenantGrantors: Covenants[];
+
+  @DeleteDateColumn()
+  deleted_at: Date;
 
   @CreateDateColumn() // Para já capturar a data e fazer a formatação
   created_at: Date;

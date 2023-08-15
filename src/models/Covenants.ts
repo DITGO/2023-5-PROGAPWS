@@ -3,6 +3,8 @@ import {
   CreateDateColumn,
   DeleteDateColumn,
   Entity,
+  JoinTable,
+  ManyToMany,
   ManyToOne,
   OneToMany,
   PrimaryColumn,
@@ -47,11 +49,8 @@ export class Covenants {
   @Column({ nullable: true })
   balance: string;
 
-  @ManyToOne(() => Grantor, grantor => grantor.covenants, {
-    eager: true,
-    nullable: true,
-  })
-  grantor: Grantor;
+  @ManyToMany(() => Grantor, grantor => grantor.covenantGrantors)
+  covenantGrantors: Grantor[];
 
   @OneToMany(() => ResourceObject, resourceObjects => resourceObjects.covenants)
   resourceObjects: ResourceObject[];

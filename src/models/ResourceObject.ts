@@ -68,7 +68,7 @@ export class ResourceObject {
 
   @ManyToOne(() => Objects, objetc => objetc.resourceObjects, {
     eager: true,
-    nullable: true,
+    nullable: false,
   })
   objects: Objects;
 
