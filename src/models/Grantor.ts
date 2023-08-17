@@ -3,14 +3,14 @@ import {
   CreateDateColumn,
   DeleteDateColumn,
   Entity,
-  ManyToMany,
+  OneToMany,
   PrimaryColumn,
   UpdateDateColumn,
 } from 'typeorm';
 import { v4 as uuid } from 'uuid'; // Importando o uuid v4 e renomeando pra uuid
-import { Covenants } from './Covenants';
+import { CovenantGrantor } from './CovenantGrantor';
 
-@Entity('grantor')
+@Entity('grantors')
 export class Grantor {
   @PrimaryColumn()
   readonly id: string;
@@ -18,11 +18,8 @@ export class Grantor {
   @Column({ nullable: true })
   name: string;
 
-  @Column({ nullable: true })
-  contributionValue: string;
-
-  @ManyToMany(() => Covenants, covenant => covenant.covenantGrantors)
-  covenantGrantors: Covenants[];
+  @OneToMany(() => CovenantGrantor, covenant => covenant.grantors)
+  covenantGrantor: CovenantGrantor[];
 
   @DeleteDateColumn()
   deleted_at: Date;

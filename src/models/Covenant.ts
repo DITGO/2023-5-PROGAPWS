@@ -3,19 +3,16 @@ import {
   CreateDateColumn,
   DeleteDateColumn,
   Entity,
-  JoinTable,
-  ManyToMany,
-  ManyToOne,
   OneToMany,
   PrimaryColumn,
   UpdateDateColumn,
 } from 'typeorm';
 import { v4 as uuid } from 'uuid'; // Importando o uuid v4 e renomeando pra uuid
-import { Grantor } from './Grantor';
 import { ResourceObject } from './ResourceObject';
+import { CovenantGrantor } from './CovenantGrantor';
 
 @Entity('covenants') // Do TypeORM, pois será uma entidade do banco de dados, utilizada no controller
-export class Covenants {
+export class Covenant {
   @PrimaryColumn()
   readonly id: string; // o readonly para não deixar quem tem informação do id mudar o valor, nesse caso o controller poderá só ler
 
@@ -49,8 +46,11 @@ export class Covenants {
   @Column({ nullable: true })
   balance: string;
 
-  @ManyToMany(() => Grantor, grantor => grantor.covenantGrantors)
-  covenantGrantors: Grantor[];
+  @OneToMany(
+    () => CovenantGrantor,
+    covenantGrantor => covenantGrantor.covenants,
+  )
+  covenantGrantor: CovenantGrantor[];
 
   @OneToMany(() => ResourceObject, resourceObjects => resourceObjects.covenants)
   resourceObjects: ResourceObject[];

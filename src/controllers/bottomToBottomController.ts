@@ -6,7 +6,7 @@ import { BottomToBottom } from '../models/BottomToBottom';
 
 class BottomToBottomController {
   async create(request: Request, response: Response, next: NextFunction) {
-    const { source, year, amount, balance, axle } = request.body;
+    const { source, year, amount, axle } = request.body;
 
     const schema = yup.object().shape({
       source: yup.string().nullable(),

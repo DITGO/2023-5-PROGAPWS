@@ -137,31 +137,6 @@ class ObjectsController {
 
     return response.json(resourceObjectRepository);
   }
-
-  async paginar(request: Request, response: Response, next: NextFunction) {
-    const resourceObjectRepository = APPDataSource.getRepository(Objects);
-
-    const { perPage, page, column } = request.query;
-    const skip = parseInt(page.toString()) * parseInt(perPage.toString());
-
-    const all = await resourceObjectRepository
-      .createQueryBuilder('object')
-      .take(parseInt(perPage.toString()))
-      .skip(skip)
-      .addOrderBy(column.toString(), 'ASC')
-      .getMany();
-
-    return response.json(all);
-  }
-
-  async token(request: Request, response: Response, next: NextFunction) {
-    const id = 1;
-    const token = jwt.sign({ id }, process.env.SECRET, {
-      expiresIn: 43200,
-    });
-
-    return response.json({ auth: true, token });
-  }
 }
 
 export { ObjectsController };

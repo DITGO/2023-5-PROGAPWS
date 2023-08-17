@@ -9,7 +9,7 @@ import { Resource } from '../models/Resource';
 import { ResourceObject } from '../models/ResourceObject';
 import { BottomToBottom } from '../models/BottomToBottom';
 import { Goal } from '../models/Goal';
-import { Covenants } from '../models/Covenants';
+import { Covenant } from '../models/Covenant';
 import { Grantor } from '../models/Grantor';
 import { DestinationObjects } from '../models/DestinationObjects';
 import { CovenantGrantor } from '../models/CovenantGrantor';
@@ -34,7 +34,7 @@ export const APPDataSource = new DataSource({
     Resource,
     ResourceObject,
     BottomToBottom,
-    Covenants,
+    Covenant,
     Goal,
     Grantor,
     DestinationObjects,

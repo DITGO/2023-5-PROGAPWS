@@ -13,7 +13,7 @@ import { Objects } from './Objects';
 import { Goal } from './Goal';
 import { DeliveryObjects } from './DeliveryObjects';
 import { DestinationObjects } from './DestinationObjects';
-import { Covenants } from './Covenants';
+import { Covenant } from './Covenant';
 
 @Entity('resourceObjects') // Do TypeORM, pois será uma entidade do banco de dados, utilizada no controller
 export class ResourceObject {
@@ -54,11 +54,11 @@ export class ResourceObject {
   })
   commitmentDate: string;
 
-  @ManyToOne(() => Covenants, covenants => covenants.resourceObjects, {
+  @ManyToOne(() => Covenant, covenants => covenants.resourceObjects, {
     eager: true,
     nullable: true,
   })
-  covenants: Covenants;
+  covenants: Covenant;
 
   @ManyToOne(() => Goal, goal => goal.resourceObjects, {
     eager: true,

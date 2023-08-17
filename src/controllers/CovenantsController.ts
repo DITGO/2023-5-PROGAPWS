@@ -1,10 +1,12 @@
 import { NextFunction, Request, Response } from 'express';
 import * as yup from 'yup';
 import { APPDataSource } from '../database/data-source';
-import { Covenants } from '../models/Covenants';
+import { Covenant } from '../models/Covenant';
+import { CovenantGrantor } from '../models/CovenantGrantor';
 
 class CovenantsController {
   async create(request: Request, response: Response, next: NextFunction) {
+    // console.log('teste', request.body);
     const {
       source,
       year,
@@ -16,7 +18,7 @@ class CovenantsController {
       globalValue,
       description,
       balance,
-      grantor,
+      covenantGrantor,
     } = request.body;
 
     const schema = yup.object().shape({
@@ -40,7 +42,7 @@ class CovenantsController {
         .json({ status: 'Erro de validação dos campos!', errors: err.errors });
     }
 
-    const covenantsRepository = APPDataSource.getRepository(Covenants);
+    const covenantsRepository = APPDataSource.getRepository(Covenant);
 
     const covenants = covenantsRepository.create({
       source,
@@ -53,19 +55,42 @@ class CovenantsController {
       globalValue,
       description,
       balance,
-      grantor,
     });
 
     await covenantsRepository.save(covenants);
 
+    const covenantGrantorPromises = covenantGrantor.map(async element => {
+      const contributionValue = element.contributionValue;
+      const grantors = element.grantors;
+
+      const convenantGrantorRepository =
+        APPDataSource.getRepository(CovenantGrantor);
+
+      const covenantGrantor = convenantGrantorRepository.create({
+        contributionValue,
+        covenants,
+        grantors,
+      });
+
+      return convenantGrantorRepository.save(covenantGrantor);
+    });
+
+    try {
+      await Promise.all(covenantGrantorPromises);
+    } catch (err) {
+      return response
+        .status(500)
+        .json({ status: 'Erro ao criar covenantGrantors', error: err });
+    }
     return response.status(201).json(covenants);
   }
 
   async all(request: Request, response: Response, next: NextFunction) {
-    const covenantsRepository = APPDataSource.getRepository(Covenants);
+    const covenantsRepository = APPDataSource.getRepository(Covenant);
     const all = await covenantsRepository.find({
       relations: {
-        grantor: true,
+        covenantGrantor: true,
+        resourceObjects: true,
       },
     });
 
@@ -73,7 +98,7 @@ class CovenantsController {
   }
 
   async one(request: Request, response: Response, next: NextFunction) {
-    const covenantsRepository = APPDataSource.getRepository(Covenants);
+    const covenantsRepository = APPDataSource.getRepository(Covenant);
     const { id } = request.params;
 
     const one = await covenantsRepository.findOne({ where: { id: id } });
@@ -93,7 +118,7 @@ class CovenantsController {
       globalValue,
       description,
       balance,
-      grantor,
+      covenantGrantor,
     } = request.body;
     const id = request.params.id;
 
@@ -118,7 +143,7 @@ class CovenantsController {
         .json({ status: 'Erro de validação dos campos!' });
     }
 
-    const covenantsRepository = APPDataSource.getRepository(Covenants);
+    const covenantsRepository = APPDataSource.getRepository(Covenant);
     const covenants = await covenantsRepository.update(
       {
         id,
@@ -134,7 +159,7 @@ class CovenantsController {
         globalValue,
         description,
         balance,
-        grantor,
+        covenantGrantor,
       },
     );
 
@@ -142,7 +167,7 @@ class CovenantsController {
   }
 
   async remove(request: Request, response: Response, next: NextFunction) {
-    const covenantsRepository = APPDataSource.getRepository(Covenants);
+    const covenantsRepository = APPDataSource.getRepository(Covenant);
     const covenantsToRemove = await covenantsRepository.findOneBy({
       id: request.params.id,
     });
@@ -151,7 +176,7 @@ class CovenantsController {
       return response.status(400).json({ status: 'Covenants não encontrado!' });
     }
 
-    const deleteResponse = await covenantsRepository.softDelete(
+    const deleteResponse = await covenantsRepository.delete(
       covenantsToRemove.id,
     );
     if (!deleteResponse.affected) {
@@ -162,7 +187,7 @@ class CovenantsController {
   }
 
   async restore(request: Request, response: Response, next: NextFunction) {
-    const covenantsRepository = APPDataSource.getRepository(Covenants);
+    const covenantsRepository = APPDataSource.getRepository(Covenant);
     const covenantsToRestore = await covenantsRepository.findOne({
       where: { id: request.params.id },
       withDeleted: true,

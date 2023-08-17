@@ -9,8 +9,9 @@ import { BottomToBottomController } from './controllers/bottomToBottomController
 import { GoalController } from './controllers/GoalController';
 import { DestinationObjectsControllers } from './controllers/DestinationObjectsControllers';
 import { GrantorController } from './controllers/GrantorController';
-import { CovenantsController } from './controllers/CovenantsController';
 import { DeliveryObjectControllers } from './controllers/DeliveryObjectControllers';
+import { CovenantGrantorsController } from './controllers/CovenantGrantorsController';
+import { CovenantsController } from './controllers/CovenantsController';
 
 const router = Router();
 const objectsController = new ObjectsController();
@@ -24,6 +25,7 @@ const bottomToBottomController = new BottomToBottomController();
 const goalController = new GoalController();
 const resourceObjectController = new ResourceObjectController();
 const deliveryController = new DeliveryObjectControllers();
+const covenantGrantor = new CovenantGrantorsController();
 
 /*
     5 métodos de requisição HTTP mais utilizados:
@@ -33,7 +35,6 @@ const deliveryController = new DeliveryObjectControllers();
     DELETE => Deletar
     PATCH => Alteração específica
 */
-router.get('/generateToken', objectsController.token);
 //fundo a fundo
 router.post('/bottomToBottom', verifyToken, bottomToBottomController.create);
 router.get('/bottomToBottom', verifyToken, bottomToBottomController.all);
@@ -62,7 +63,12 @@ router.get('/grantor', verifyToken, grantorController.all);
 router.get('/grantor/:id', verifyToken, grantorController.one);
 router.put('/grantor/:id', verifyToken, grantorController.update);
 router.delete('/grantor/:id', verifyToken, grantorController.remove);
-router.patch('/grantor/:id', verifyToken, grantorController.restore);
+
+router.post('/covenantGrantor', verifyToken, covenantGrantor.create);
+router.get('/covenantGrantor', verifyToken, covenantGrantor.all);
+// router.get('/covenantGrantor/:id', verifyToken, covenantGrantor.one);
+// router.put('/covenantGrantor/:id', verifyToken, covenantGrantor.update);
+// router.delete('/covenantGrantor/:id', verifyToken, covenantGrantor.remove);
 
 router.post('/goals', verifyToken, goalController.create);
 router.get('/goals', verifyToken, goalController.all);

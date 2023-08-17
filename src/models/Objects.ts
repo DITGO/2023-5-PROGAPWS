@@ -21,15 +21,6 @@ export class Objects {
   @Column() // Poderia passar o nome da coluna: @Column("name"), mas o atributo já está com mesmo nome
   name: string;
 
-  @DeleteDateColumn()
-  deleted_at: Date;
-
-  @CreateDateColumn() // Para já capturar a data e fazer a formatação
-  created_at: Date;
-
-  @UpdateDateColumn() // Para já capturar a data e fazer a formatação
-  update_at: Date;
-
   @OneToMany(() => ResourceObject, resourceObjects => resourceObjects.objects)
   resourceObjects: ResourceObject[];
 
@@ -38,6 +29,15 @@ export class Objects {
 
   @ManyToOne(() => Model, model => model.objects, { eager: true })
   model: Model;
+
+  @DeleteDateColumn()
+  deleted_at: Date;
+
+  @CreateDateColumn() // Para já capturar a data e fazer a formatação
+  created_at: Date;
+
+  @UpdateDateColumn() // Para já capturar a data e fazer a formatação
+  update_at: Date;
 
   /*
       A geração do uuID automático não será por meio do SGBD, e sim aqui pelo código

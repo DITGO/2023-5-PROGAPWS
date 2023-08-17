@@ -5,10 +5,9 @@ import { Grantor } from '../models/Grantor';
 
 class GrantorController {
   async create(request: Request, response: Response, next: NextFunction) {
-    const { name, contributionValue } = request.body;
+    const { name } = request.body;
     const schema = yup.object().shape({
       name: yup.string(),
-      contributionValue: yup.string(),
     });
 
     try {
@@ -30,7 +29,6 @@ class GrantorController {
 
     const grantor = grantorRepository.create({
       name,
-      contributionValue,
     });
 
     await grantorRepository.save(grantor);
@@ -43,7 +41,7 @@ class GrantorController {
 
     const all = await grantorRepository.find({
       relations: {
-        covenants: true,
+        covenantGrantor: true,
       },
     });
 
@@ -66,7 +64,6 @@ class GrantorController {
 
     const schema = yup.object().shape({
       name: yup.string(),
-      contributionValue: yup.string(),
     });
 
     try {
@@ -85,7 +82,6 @@ class GrantorController {
       },
       {
         name,
-        contributionValue,
       },
     );
 
@@ -115,29 +111,6 @@ class GrantorController {
     }
 
     return response.json(grantorToRemove);
-  }
-
-  async restore(request: Request, response: Response, next: NextFunction) {
-    const grantorRepository = APPDataSource.getRepository(Grantor);
-
-    const grantorToRestore = await grantorRepository.findOne({
-      where: { id: request.params.id },
-      withDeleted: true,
-    });
-
-    if (!grantorToRestore) {
-      return response.status(400).json({ status: 'Grantor não encontrado!' });
-    }
-
-    const restoreResponse = await grantorRepository.restore(
-      grantorToRestore.id,
-    );
-
-    if (restoreResponse.affected) {
-      return response.status(200).json({ status: 'Grantor recuperado!' });
-    }
-
-    return response.json(grantorRepository);
   }
 }
 export { GrantorController };
