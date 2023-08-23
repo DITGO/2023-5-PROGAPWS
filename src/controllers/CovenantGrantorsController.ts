@@ -93,7 +93,7 @@ class CovenantGrantorsController {
         .json({ status: 'convênio/concedente não encontrada!' });
     }
 
-    const deleteResponse = await convenantGrantorRepository.delete(
+    const deleteResponse = await convenantGrantorRepository.softDelete(
       covenantGrantorToRemove.id,
     );
     if (!deleteResponse.affected) {
