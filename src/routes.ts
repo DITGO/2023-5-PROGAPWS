@@ -68,7 +68,7 @@ router.post('/covenantGrantor', verifyToken, covenantGrantor.create);
 router.get('/covenantGrantor', verifyToken, covenantGrantor.all);
 // router.get('/covenantGrantor/:id', verifyToken, covenantGrantor.one);
 // router.put('/covenantGrantor/:id', verifyToken, covenantGrantor.update);
-// router.delete('/covenantGrantor/:id', verifyToken, covenantGrantor.remove);
+router.delete('/covenantGrantor/:id', verifyToken, covenantGrantor.remove);
 
 router.post('/goals', verifyToken, goalController.create);
 router.get('/goals', verifyToken, goalController.all);

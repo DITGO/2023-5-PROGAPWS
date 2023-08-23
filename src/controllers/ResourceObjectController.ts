@@ -56,7 +56,7 @@ class ResourceObjectController {
       commitmentDate,
       executedValue,
       acquisitionMode,
-      // covenants,
+      covenants,
       objects,
       goal,
     });
@@ -73,7 +73,7 @@ class ResourceObjectController {
       relations: {
         objects: true,
         goal: true,
-        // covenants: true,
+        covenants: true,
       },
     });
 
@@ -148,7 +148,7 @@ class ResourceObjectController {
         acquisitionMode,
         commitmentDate,
         executedValue,
-        // covenants,
+        covenants,
         objects,
         goal,
       },

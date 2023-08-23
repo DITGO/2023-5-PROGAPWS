@@ -6,7 +6,6 @@ import { CovenantGrantor } from '../models/CovenantGrantor';
 
 class CovenantsController {
   async create(request: Request, response: Response, next: NextFunction) {
-    // console.log('teste', request.body);
     const {
       source,
       year,
@@ -101,7 +100,13 @@ class CovenantsController {
     const covenantsRepository = APPDataSource.getRepository(Covenant);
     const { id } = request.params;
 
-    const one = await covenantsRepository.findOne({ where: { id: id } });
+    const one = await covenantsRepository.findOne({
+      where: { id: id },
+      relations: {
+        covenantGrantor: true,
+        resourceObjects: true,
+      },
+    });
 
     return response.json(one);
   }
@@ -176,7 +181,7 @@ class CovenantsController {
       return response.status(400).json({ status: 'Covenants não encontrado!' });
     }
 
-    const deleteResponse = await covenantsRepository.delete(
+    const deleteResponse = await covenantsRepository.softDelete(
       covenantsToRemove.id,
     );
     if (!deleteResponse.affected) {

@@ -55,8 +55,8 @@ export class Covenant {
   @OneToMany(() => ResourceObject, resourceObjects => resourceObjects.covenants)
   resourceObjects: ResourceObject[];
 
-  @DeleteDateColumn()
-  deleted_at: Date;
+  @DeleteDateColumn({ nullable: true, default: null })
+  deleted_at: Date; // Coluna que indicará se o convênio foi excluído (null para não excluído, data para excluído)
 
   @CreateDateColumn() // Para já capturar a data e fazer a formatação
   created_at: Date;
