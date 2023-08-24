@@ -145,14 +145,14 @@ class CovenantsController {
     } catch (err) {
       return response
         .status(400)
-        .json({ status: 'Erro de validação dos campos!' });
+        .json({ status: 'Erro de validação dos campos!', errors: err.errors });
     }
 
     const covenantsRepository = APPDataSource.getRepository(Covenant);
-    const covenants = await covenantsRepository.update(
-      {
-        id,
-      },
+
+    // Atualizando os dados do convênio
+    await covenantsRepository.update(
+      { id },
       {
         source,
         year,
@@ -164,11 +164,51 @@ class CovenantsController {
         globalValue,
         description,
         balance,
-        covenantGrantor,
       },
     );
 
-    return response.status(201).json(covenants);
+    // Agora, vamos lidar com os covenantGrantors
+    if (covenantGrantor && covenantGrantor.length > 0) {
+      const covenantGrantorPromises = covenantGrantor.map(async element => {
+        const contributionValue = element.contributionValue;
+        const grantors = element.grantors;
+
+        const convenantGrantorRepository =
+          APPDataSource.getRepository(CovenantGrantor);
+
+        // Aqui você pode checar se precisa substituir ou editar os covenantGrantors existentes
+        if (element.id) {
+          // Se element.id estiver presente, você pode atualizar o existente
+          await convenantGrantorRepository.update(
+            { id: element.id },
+            {
+              contributionValue,
+              grantors,
+            },
+          );
+        } else {
+          // Caso contrário, crie um novo covenantGrantor
+          const covenantGrantor = convenantGrantorRepository.create({
+            contributionValue,
+            covenants: { id }, // Pode ser necessário ajustar isso dependendo da estrutura de dados
+            grantors,
+          });
+          await convenantGrantorRepository.save(covenantGrantor);
+        }
+      });
+
+      try {
+        await Promise.all(covenantGrantorPromises);
+      } catch (err) {
+        return response
+          .status(500)
+          .json({ status: 'Erro ao atualizar covenantGrantors', error: err });
+      }
+    }
+
+    return response
+      .status(201)
+      .json({ status: 'Atualização concluída com sucesso!' });
   }
 
   async remove(request: Request, response: Response, next: NextFunction) {
