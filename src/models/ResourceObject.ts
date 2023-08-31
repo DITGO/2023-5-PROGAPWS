@@ -12,8 +12,8 @@ import { v4 as uuid } from 'uuid'; // Importando o uuid v4 e renomeando pra uuid
 import { Objects } from './Objects';
 import { Goal } from './Goal';
 import { DeliveryObjects } from './DeliveryObjects';
-import { DestinationObjects } from './DestinationObjects';
 import { Covenant } from './Covenant';
+import { DestinationObjects } from './DestinationObjects';
 
 @Entity('resourceObjects') // Do TypeORM, pois será uma entidade do banco de dados, utilizada no controller
 export class ResourceObject {

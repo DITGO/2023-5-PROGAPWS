@@ -1,6 +1,7 @@
 import {
   Column,
   CreateDateColumn,
+  DeleteDateColumn,
   Entity,
   ManyToOne,
   PrimaryColumn,
@@ -18,7 +19,7 @@ export class DestinationObjects {
   unitId: number;
 
   @Column({ nullable: true })
-  expectedAmount: string;
+  expectedQuantity: string;
 
   @ManyToOne(
     () => ResourceObject,
@@ -29,6 +30,9 @@ export class DestinationObjects {
     },
   )
   resourceObjects: ResourceObject;
+
+  @DeleteDateColumn()
+  deleted_at: Date;
 
   @CreateDateColumn() // Para já capturar a data e fazer a formatação
   created_at: Date;

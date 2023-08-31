@@ -2,6 +2,8 @@ import { NextFunction, Request, Response } from 'express';
 import * as yup from 'yup';
 import { APPDataSource } from '../database/data-source';
 import { ResourceObject } from '../models/ResourceObject';
+import { DestinationObjects } from '../models/DestinationObjects';
+import { DeepPartial } from 'typeorm';
 
 class ResourceObjectController {
   async create(request: Request, response: Response, next: NextFunction) {
@@ -16,6 +18,7 @@ class ResourceObjectController {
       commitmentDate,
       acquisitionMode,
       executedValue,
+      destinationObjects,
       covenants,
       objects,
       goal,
@@ -60,11 +63,42 @@ class ResourceObjectController {
       objects,
       goal,
     });
-    await resourceObjectRepository.save(resourceObject);
+
+    const savedResourceObject = await resourceObjectRepository.save(
+      resourceObject,
+    );
+
+    const destinationObjectsPromises = destinationObjects.map(async element => {
+      const unitId = element.unitId;
+      const expectedQuantity = element.expectedQuantity;
+
+      const destinationRepository =
+        APPDataSource.getRepository(DestinationObjects);
+
+      // Cria um objeto de recurso parcial contendo apenas o ID do objeto de recurso
+      const resourceObjectPartial: DeepPartial<ResourceObject> = {
+        id: savedResourceObject.id,
+      };
+
+      const destinationObject = destinationRepository.create({
+        unitId,
+        expectedQuantity,
+        resourceObjects: resourceObjectPartial, // Associa o objeto de recurso parcial ao campo
+      });
+
+      return destinationRepository.save(destinationObject);
+    });
+
+    try {
+      await Promise.all(destinationObjectsPromises);
+    } catch (err) {
+      return response
+        .status(500)
+        .json({ status: 'Erro ao criar destinações do objeto', error: err });
+    }
 
     return response.status(201).json(resourceObject);
   }
-
   async all(request: Request, response: Response, next: NextFunction) {
     const resourceObjectRepository =
       APPDataSource.getRepository(ResourceObject);
@@ -74,6 +108,7 @@ class ResourceObjectController {
         objects: true,
         goal: true,
         covenants: true,
+        destinationObjects: true,
       },
     });
 
@@ -86,7 +121,15 @@ class ResourceObjectController {
 
     const { id } = request.params;
 
-    const one = await resourceObjectRepository.findOne({ where: { id: id } });
+    const one = await resourceObjectRepository.findOne({
+      where: { id: id },
+      relations: {
+        objects: true,
+        goal: true,
+        covenants: true,
+        destinationObjects: true,
+      },
+    });
 
     return response.json(one);
   }
@@ -103,6 +146,7 @@ class ResourceObjectController {
       natureExpense,
       commitmentDate,
       executedValue,
+      destinationObjects,
       covenants,
       objects,
       goal,
@@ -133,10 +177,9 @@ class ResourceObjectController {
     const resourceObjectRepository =
       APPDataSource.getRepository(ResourceObject);
 
-    const resourceObject = await resourceObjectRepository.update(
-      {
-        id,
-      },
+    // Atualizando os campos do resourceObject
+    await resourceObjectRepository.update(
+      { id },
       {
         amount,
         unitaryValue,
@@ -154,7 +197,55 @@ class ResourceObjectController {
       },
     );
 
-    return response.status(201).json(resourceObject);
+    // Lidando com a atualização dos destinationObjects
+    if (destinationObjects && destinationObjects.length > 0) {
+      const destinationObjectsPromises = destinationObjects.map(
+        async element => {
+          const unitId = element.unitId;
+          const expectedQuantity = element.expectedQuantity;
+
+          const destinationRepository =
+            APPDataSource.getRepository(DestinationObjects);
+
+          // Aqui você pode checar se precisa substituir ou editar os destinationObjects existentes
+          if (element.id) {
+            // Se destinationObjectId estiver presente, você pode atualizar o existente
+            await destinationRepository.update(
+              { id: element.id },
+              {
+                unitId,
+                expectedQuantity,
+              },
+            );
+          } else {
+            // Caso contrário, crie um novo destinationObject
+            const resourceObjectPartial: DeepPartial<ResourceObject> = {
+              id,
+            };
+
+            const destinationObject = destinationRepository.create({
+              unitId,
+              expectedQuantity,
+              resourceObjects: resourceObjectPartial,
+            });
+
+            await destinationRepository.save(destinationObject);
+          }
+        },
+      );
+
+      try {
+        await Promise.all(destinationObjectsPromises);
+      } catch (err) {
+        return response
+          .status(500)
+          .json({ status: 'Erro ao atualizar destinationObjects', error: err });
+      }
+    }
+
+    return response
+      .status(201)
+      .json({ status: 'Atualização concluída com sucesso!' });
   }
 
   async remove(request: Request, response: Response, next: NextFunction) {

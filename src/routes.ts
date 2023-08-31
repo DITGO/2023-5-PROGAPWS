@@ -64,11 +64,20 @@ router.get('/grantor/:id', verifyToken, grantorController.one);
 router.put('/grantor/:id', verifyToken, grantorController.update);
 router.delete('/grantor/:id', verifyToken, grantorController.remove);
 
-router.post('/covenantGrantor', verifyToken, covenantGrantor.create);
+// router.post('/covenantGrantor', verifyToken, covenantGrantor.create);
 router.get('/covenantGrantor', verifyToken, covenantGrantor.all);
 // router.get('/covenantGrantor/:id', verifyToken, covenantGrantor.one);
 // router.put('/covenantGrantor/:id', verifyToken, covenantGrantor.update);
 router.delete('/covenantGrantor/:id', verifyToken, covenantGrantor.remove);
+
+// router.post('/destinationObjects', verifyToken, destinationObjects.create);
+router.get('/destinationObjects', verifyToken, destinationObjects.all);
+// router.get('/destinationObjects/:id', verifyToken, destinationObjects.one);
+router.delete(
+  '/destinationObjects/:id',
+  verifyToken,
+  destinationObjects.remove,
+);
 
 router.post('/goals', verifyToken, goalController.create);
 router.get('/goals', verifyToken, goalController.all);
@@ -135,16 +144,5 @@ router.get('/delivery', verifyToken, deliveryController.all);
 router.put('/delivery/:id', verifyToken, deliveryController.update);
 router.get('/delivery/:id', verifyToken, deliveryController.one);
 router.delete('/delivery/:id', verifyToken, deliveryController.remove);
-
-//Model Routes
-router.post('/destinationObjects', verifyToken, destinationObjects.create);
-router.get('/destinationObjects', verifyToken, destinationObjects.all);
-router.put('/destinationObjects/:id', verifyToken, destinationObjects.update);
-router.get('/destinationObjects/:id', verifyToken, destinationObjects.one);
-router.delete(
-  '/destinationObjects/:id',
-  verifyToken,
-  destinationObjects.remove,
-);
 
 export { router }; // Retornando as rotas preenchidas para o server.ts
