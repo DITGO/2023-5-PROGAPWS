@@ -9,7 +9,7 @@ import {
 } from 'typeorm';
 import { v4 as uuid } from 'uuid'; // Importando o uuid v4 e renomeando pra uuid
 import { ResourceObject } from './ResourceObject';
-import { CovenantGrantor } from './CovenantGrantor';
+import { CovenantAuthor } from './CovenantAuthor';
 
 @Entity('covenants') // Do TypeORM, pois será uma entidade do banco de dados, utilizada no controller
 export class Covenant {
@@ -29,7 +29,7 @@ export class Covenant {
   agreementNumber: string;
 
   @Column({ nullable: true })
-  processNumber: string;
+  amendment: string;
 
   @Column({ nullable: true })
   transferAmount: string;
@@ -46,11 +46,8 @@ export class Covenant {
   @Column({ nullable: true })
   balance: string;
 
-  @OneToMany(
-    () => CovenantGrantor,
-    covenantGrantor => covenantGrantor.covenants,
-  )
-  covenantGrantor: CovenantGrantor[];
+  @OneToMany(() => CovenantAuthor, covenantAuthor => covenantAuthor.covenants)
+  covenantAuthor: CovenantAuthor[];
 
   @OneToMany(() => ResourceObject, resourceObjects => resourceObjects.covenants)
   resourceObjects: ResourceObject[];

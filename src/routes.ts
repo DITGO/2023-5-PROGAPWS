@@ -8,24 +8,24 @@ import { verifyToken } from './Utils/functionsToken';
 import { BottomToBottomController } from './controllers/bottomToBottomController';
 import { GoalController } from './controllers/GoalController';
 import { DestinationObjectsControllers } from './controllers/DestinationObjectsControllers';
-import { GrantorController } from './controllers/GrantorController';
 import { DeliveryObjectControllers } from './controllers/DeliveryObjectControllers';
-import { CovenantGrantorsController } from './controllers/CovenantGrantorsController';
 import { CovenantsController } from './controllers/CovenantsController';
+import { CovenantAuthorsController } from './controllers/CovenantAuthorsController';
+import { AuthorController } from './controllers/AuthorController';
 
 const router = Router();
 const objectsController = new ObjectsController();
 const natureController = new NatureController();
 const modelController = new ModelController();
 const axleController = new AxleController();
-const grantorController = new GrantorController();
+const grantorController = new AuthorController();
 const covenantsController = new CovenantsController();
 const destinationObjects = new DestinationObjectsControllers();
 const bottomToBottomController = new BottomToBottomController();
 const goalController = new GoalController();
 const resourceObjectController = new ResourceObjectController();
 const deliveryController = new DeliveryObjectControllers();
-const covenantGrantor = new CovenantGrantorsController();
+const covenantAuthor = new CovenantAuthorsController();
 
 /*
     5 métodos de requisição HTTP mais utilizados:
@@ -58,17 +58,17 @@ router.put('/covenants/:id', verifyToken, covenantsController.update);
 router.delete('/covenants/:id', verifyToken, covenantsController.remove);
 router.patch('/covenants/:id', verifyToken, covenantsController.restore);
 
-router.post('/grantor', verifyToken, grantorController.create);
-router.get('/grantor', verifyToken, grantorController.all);
-router.get('/grantor/:id', verifyToken, grantorController.one);
-router.put('/grantor/:id', verifyToken, grantorController.update);
-router.delete('/grantor/:id', verifyToken, grantorController.remove);
+router.post('/author', verifyToken, grantorController.create);
+router.get('/author', verifyToken, grantorController.all);
+router.get('/author/:id', verifyToken, grantorController.one);
+router.put('/author/:id', verifyToken, grantorController.update);
+router.delete('/author/:id', verifyToken, grantorController.remove);
 
-// router.post('/covenantGrantor', verifyToken, covenantGrantor.create);
-router.get('/covenantGrantor', verifyToken, covenantGrantor.all);
-// router.get('/covenantGrantor/:id', verifyToken, covenantGrantor.one);
-// router.put('/covenantGrantor/:id', verifyToken, covenantGrantor.update);
-router.delete('/covenantGrantor/:id', verifyToken, covenantGrantor.remove);
+// router.post('/covenantAuthor', verifyToken, covenantAuthor.create);
+router.get('/covenantAuthor', verifyToken, covenantAuthor.all);
+// router.get('/covenantAuthor/:id', verifyToken, covenantAuthor.one);
+// router.put('/covenantAuthor/:id', verifyToken, covenantAuthor.update);
+router.delete('/covenantAuthor/:id', verifyToken, covenantAuthor.remove);
 
 // router.post('/destinationObjects', verifyToken, destinationObjects.create);
 router.get('/destinationObjects', verifyToken, destinationObjects.all);

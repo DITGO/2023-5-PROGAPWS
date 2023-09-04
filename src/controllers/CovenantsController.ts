@@ -2,7 +2,7 @@ import { NextFunction, Request, Response } from 'express';
 import * as yup from 'yup';
 import { APPDataSource } from '../database/data-source';
 import { Covenant } from '../models/Covenant';
-import { CovenantGrantor } from '../models/CovenantGrantor';
+import { CovenantAuthor } from '../models/CovenantAuthor';
 
 class CovenantsController {
   async create(request: Request, response: Response, next: NextFunction) {
@@ -11,13 +11,13 @@ class CovenantsController {
       year,
       amendmentNumber,
       agreementNumber,
-      processNumber,
+      amendment,
       transferAmount,
       counterpartValue,
       globalValue,
       description,
       balance,
-      covenantGrantor,
+      covenantAuthor,
     } = request.body;
 
     const schema = yup.object().shape({
@@ -25,7 +25,7 @@ class CovenantsController {
       year: yup.string().nullable(),
       amendmentNumber: yup.string().nullable(),
       agreementNumber: yup.string().nullable(),
-      processNumber: yup.string().nullable(),
+      amendment: yup.string().nullable(),
       transferAmount: yup.string().nullable(),
       counterpartValue: yup.string().nullable(),
       globalValue: yup.string().nullable(),
@@ -48,7 +48,7 @@ class CovenantsController {
       year,
       amendmentNumber,
       agreementNumber,
-      processNumber,
+      amendment,
       transferAmount,
       counterpartValue,
       globalValue,
@@ -58,28 +58,28 @@ class CovenantsController {
 
     await covenantsRepository.save(covenants);
 
-    const covenantGrantorPromises = covenantGrantor.map(async element => {
+    const covenantAuthorPromises = covenantAuthor.map(async element => {
       const contributionValue = element.contributionValue;
-      const grantors = element.grantors;
+      const authors = element.authors;
 
-      const convenantGrantorRepository =
-        APPDataSource.getRepository(CovenantGrantor);
+      const convenantAuthorRepository =
+        APPDataSource.getRepository(CovenantAuthor);
 
-      const covenantGrantor = convenantGrantorRepository.create({
+      const covenantAuthor = convenantAuthorRepository.create({
         contributionValue,
         covenants,
-        grantors,
+        authors,
       });
 
-      return convenantGrantorRepository.save(covenantGrantor);
+      return convenantAuthorRepository.save(covenantAuthor);
     });
 
     try {
-      await Promise.all(covenantGrantorPromises);
+      await Promise.all(covenantAuthorPromises);
     } catch (err) {
       return response
         .status(500)
-        .json({ status: 'Erro ao criar covenantGrantors', error: err });
+        .json({ status: 'Erro ao criar covenantAuthors', error: err });
     }
     return response.status(201).json(covenants);
   }
@@ -88,7 +88,7 @@ class CovenantsController {
     const covenantsRepository = APPDataSource.getRepository(Covenant);
     const all = await covenantsRepository.find({
       relations: {
-        covenantGrantor: true,
+        covenantAuthor: true,
         resourceObjects: true,
       },
     });
@@ -103,7 +103,7 @@ class CovenantsController {
     const one = await covenantsRepository.findOne({
       where: { id: id },
       relations: {
-        covenantGrantor: true,
+        covenantAuthor: true,
         resourceObjects: true,
       },
     });
@@ -117,13 +117,13 @@ class CovenantsController {
       year,
       amendmentNumber,
       agreementNumber,
-      processNumber,
+      amendment,
       transferAmount,
       counterpartValue,
       globalValue,
       description,
       balance,
-      covenantGrantor,
+      covenantAuthor,
     } = request.body;
     const id = request.params.id;
 
@@ -132,7 +132,7 @@ class CovenantsController {
       year: yup.string().nullable(),
       amendmentNumber: yup.string().nullable(),
       agreementNumber: yup.string().nullable(),
-      processNumber: yup.string().nullable(),
+      amendment: yup.string().nullable(),
       transferAmount: yup.string().nullable(),
       counterpartValue: yup.string().nullable(),
       globalValue: yup.string().nullable(),
@@ -158,7 +158,7 @@ class CovenantsController {
         year,
         amendmentNumber,
         agreementNumber,
-        processNumber,
+        amendment,
         transferAmount,
         counterpartValue,
         globalValue,
@@ -167,42 +167,42 @@ class CovenantsController {
       },
     );
 
-    // Agora, vamos lidar com os covenantGrantors
-    if (covenantGrantor && covenantGrantor.length > 0) {
-      const covenantGrantorPromises = covenantGrantor.map(async element => {
+    // Agora, vamos lidar com os covenantAuthors
+    if (covenantAuthor && covenantAuthor.length > 0) {
+      const covenantAuthorPromises = covenantAuthor.map(async element => {
         const contributionValue = element.contributionValue;
-        const grantors = element.grantors;
+        const authors = element.authors;
 
-        const convenantGrantorRepository =
-          APPDataSource.getRepository(CovenantGrantor);
+        const convenantAuthorRepository =
+          APPDataSource.getRepository(CovenantAuthor);
 
-        // Aqui você pode checar se precisa substituir ou editar os covenantGrantors existentes
+        // Aqui você pode checar se precisa substituir ou editar os covenantAuthors existentes
         if (element.id) {
           // Se element.id estiver presente, você pode atualizar o existente
-          await convenantGrantorRepository.update(
+          await convenantAuthorRepository.update(
             { id: element.id },
             {
               contributionValue,
-              grantors,
+              authors,
             },
           );
         } else {
-          // Caso contrário, crie um novo covenantGrantor
-          const covenantGrantor = convenantGrantorRepository.create({
+          // Caso contrário, crie um novo covenantAuthor
+          const covenantAuthor = convenantAuthorRepository.create({
             contributionValue,
             covenants: { id }, // Pode ser necessário ajustar isso dependendo da estrutura de dados
-            grantors,
+            authors,
           });
-          await convenantGrantorRepository.save(covenantGrantor);
+          await convenantAuthorRepository.save(covenantAuthor);
         }
       });
 
       try {
-        await Promise.all(covenantGrantorPromises);
+        await Promise.all(covenantAuthorPromises);
       } catch (err) {
         return response
           .status(500)
-          .json({ status: 'Erro ao atualizar covenantGrantors', error: err });
+          .json({ status: 'Erro ao atualizar covenantAuthors', error: err });
       }
     }
 

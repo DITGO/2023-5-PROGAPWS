@@ -10,9 +10,9 @@ import { ResourceObject } from '../models/ResourceObject';
 import { BottomToBottom } from '../models/BottomToBottom';
 import { Goal } from '../models/Goal';
 import { Covenant } from '../models/Covenant';
-import { Grantor } from '../models/Grantor';
+import { Author } from '../models/Author';
 import { DestinationObjects } from '../models/DestinationObjects';
-import { CovenantGrantor } from '../models/CovenantGrantor';
+import { CovenantAuthor } from '../models/CovenantAuthor';
 // eslint-disable-next-line @typescript-eslint/no-var-requires
 require('dotenv').config();
 
@@ -36,9 +36,9 @@ export const APPDataSource = new DataSource({
     BottomToBottom,
     Covenant,
     Goal,
-    Grantor,
+    Author,
     DestinationObjects,
-    CovenantGrantor,
+    CovenantAuthor,
   ],
   subscribers: [],
 });

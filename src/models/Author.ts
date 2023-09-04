@@ -1,35 +1,25 @@
 import {
-  Entity,
-  ManyToOne,
-  PrimaryColumn,
   Column,
-  DeleteDateColumn,
   CreateDateColumn,
+  DeleteDateColumn,
+  Entity,
+  OneToMany,
+  PrimaryColumn,
   UpdateDateColumn,
 } from 'typeorm';
-import { Covenant } from './Covenant';
-import { Grantor } from './Grantor';
 import { v4 as uuid } from 'uuid'; // Importando o uuid v4 e renomeando pra uuid
+import { CovenantAuthor } from './CovenantAuthor';
 
-@Entity('covenantGrantor') // Nome da tabela de junção
-export class CovenantGrantor {
+@Entity('author')
+export class Author {
   @PrimaryColumn()
-  readonly id: string; // o readonly para não deixar quem tem informação do id mudar o valor, nesse caso o controller poderá só ler
+  readonly id: string;
 
-  @Column()
-  contributionValue: string;
+  @Column({ nullable: true })
+  name: string;
 
-  @ManyToOne(() => Covenant, covenant => covenant.covenantGrantor, {
-    eager: true,
-    nullable: false,
-  })
-  covenants: Covenant;
-
-  @ManyToOne(() => Grantor, grantor => grantor.covenantGrantor, {
-    eager: true,
-    nullable: false,
-  })
-  grantors: Grantor;
+  @OneToMany(() => CovenantAuthor, covenant => covenant.authors)
+  covenantAuthor: CovenantAuthor[];
 
   @DeleteDateColumn()
   deleted_at: Date;

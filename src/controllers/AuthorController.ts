@@ -1,9 +1,9 @@
 import { NextFunction, Request, Response } from 'express';
 import * as yup from 'yup';
 import { APPDataSource } from '../database/data-source';
-import { Grantor } from '../models/Grantor';
+import { Author } from '../models/Author';
 
-class GrantorController {
+class AuthorController {
   async create(request: Request, response: Response, next: NextFunction) {
     const { name } = request.body;
     const schema = yup.object().shape({
@@ -18,30 +18,30 @@ class GrantorController {
         .json({ status: 'Erro de validação dos campos!' });
     }
 
-    const grantorRepository = APPDataSource.getRepository(Grantor);
-    const grantorAlreadyExists = await grantorRepository.findOne({
+    const authorRepository = APPDataSource.getRepository(Author);
+    const authorAlreadyExists = await authorRepository.findOne({
       where: { name: name },
     });
 
-    if (grantorAlreadyExists) {
-      return response.status(400).json({ status: 'Grantor já existe!' });
+    if (authorAlreadyExists) {
+      return response.status(400).json({ status: 'author já existe!' });
     }
 
-    const grantor = grantorRepository.create({
+    const author = authorRepository.create({
       name,
     });
 
-    await grantorRepository.save(grantor);
+    await authorRepository.save(author);
 
-    return response.status(201).json(grantor);
+    return response.status(201).json(author);
   }
 
   async all(request: Request, response: Response, next: NextFunction) {
-    const grantorRepository = APPDataSource.getRepository(Grantor);
+    const authorRepository = APPDataSource.getRepository(Author);
 
-    const all = await grantorRepository.find({
+    const all = await authorRepository.find({
       relations: {
-        covenantGrantor: true,
+        covenantAuthor: true,
       },
     });
 
@@ -49,17 +49,17 @@ class GrantorController {
   }
 
   async one(request: Request, response: Response, next: NextFunction) {
-    const grantorRepository = APPDataSource.getRepository(Grantor);
+    const authorRepository = APPDataSource.getRepository(Author);
 
     const { id } = request.params;
 
-    const one = await grantorRepository.findOne({ where: { id: id } });
+    const one = await authorRepository.findOne({ where: { id: id } });
 
     return response.json(one);
   }
 
   async update(request: Request, response: Response, next: NextFunction) {
-    const { name, contributionValue } = request.body;
+    const { name } = request.body;
     const id = request.params.id;
 
     const schema = yup.object().shape({
@@ -74,9 +74,9 @@ class GrantorController {
         .json({ status: 'Erro de validação dos campos!' });
     }
 
-    const grantorRepository = APPDataSource.getRepository(Grantor);
+    const authorRepository = APPDataSource.getRepository(Author);
 
-    const grantor = await grantorRepository.update(
+    const author = await authorRepository.update(
       {
         id,
       },
@@ -85,32 +85,30 @@ class GrantorController {
       },
     );
 
-    return response.status(201).json(grantor);
+    return response.status(201).json(author);
   }
 
   async remove(request: Request, response: Response, next: NextFunction) {
-    const grantorRepository = APPDataSource.getRepository(Grantor);
+    const authorRepository = APPDataSource.getRepository(Author);
 
-    const grantorToRemove = await grantorRepository.findOneBy({
+    const authorToRemove = await authorRepository.findOneBy({
       id: request.params.id,
     });
 
-    if (!grantorToRemove) {
+    if (!authorToRemove) {
       return response
         .status(400)
         .json({ status: 'Concedente não encontrada!' });
     }
 
-    const deleteResponse = await grantorRepository.softDelete(
-      grantorToRemove.id,
-    );
+    const deleteResponse = await authorRepository.softDelete(authorToRemove.id);
     if (!deleteResponse.affected) {
       return response
         .status(400)
         .json({ status: 'Concedente não foi excluido!' });
     }
 
-    return response.json(grantorToRemove);
+    return response.json(authorToRemove);
   }
 }
-export { GrantorController };
+export { AuthorController };
