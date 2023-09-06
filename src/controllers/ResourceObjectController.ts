@@ -19,6 +19,8 @@ class ResourceObjectController {
       acquisitionMode,
       executedValue,
       destinationObjects,
+      stateTreasury,
+      stateAmendment,
       covenants,
       objects,
       goal,
@@ -59,6 +61,8 @@ class ResourceObjectController {
       commitmentDate,
       executedValue,
       acquisitionMode,
+      stateAmendment,
+      stateTreasury,
       covenants,
       objects,
       goal,
@@ -108,7 +112,9 @@ class ResourceObjectController {
         objects: true,
         goal: true,
         covenants: true,
+        stateTreasury: true,
         destinationObjects: true,
+        stateAmendment: true,
       },
     });
 
@@ -128,6 +134,7 @@ class ResourceObjectController {
         goal: true,
         covenants: true,
         destinationObjects: true,
+        stateAmendment: true,
       },
     });
 
@@ -147,6 +154,8 @@ class ResourceObjectController {
       commitmentDate,
       executedValue,
       destinationObjects,
+      stateAmendment,
+      stateTreasury,
       covenants,
       objects,
       goal,
@@ -191,6 +200,8 @@ class ResourceObjectController {
         acquisitionMode,
         commitmentDate,
         executedValue,
+        stateAmendment,
+        stateTreasury,
         covenants,
         objects,
         goal,

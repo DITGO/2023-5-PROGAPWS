@@ -10,6 +10,7 @@ import {
 import { Covenant } from './Covenant';
 import { Author } from './Author';
 import { v4 as uuid } from 'uuid'; // Importando o uuid v4 e renomeando pra uuid
+import { StateAmendment } from './StateAmendment';
 
 @Entity('covenantAuthor') // Nome da tabela de junção
 export class CovenantAuthor {

@@ -9,25 +9,27 @@ import {
   UpdateDateColumn,
 } from 'typeorm';
 import { v4 as uuid } from 'uuid'; // Importando o uuid v4 e renomeando pra uuid
-import { CovenantAuthor } from './CovenantAuthor';
-import { StateAmendment } from './StateAmendment';
+import { ResourceObject } from './ResourceObject';
 
-@Entity('author')
-export class Author {
+@Entity('stateTreasury') // Do TypeORM, pois será uma entidade do banco de dados, utilizada no controller
+export class StateTreasury {
   @PrimaryColumn()
-  readonly id: string;
+  readonly id: string; // o readonly para não deixar quem tem informação do id mudar o valor, nesse caso o controller poderá só ler
 
   @Column({ nullable: true })
-  name: string;
+  source: string;
 
-  @OneToMany(() => CovenantAuthor, covenant => covenant.authors)
-  covenantAuthor: CovenantAuthor[];
+  @Column({ nullable: true })
+  year: string;
 
-  @OneToMany(() => StateAmendment, objects => objects.authors)
-  stateAmendment: StateAmendment[];
+  @OneToMany(
+    () => ResourceObject,
+    resourceObjects => resourceObjects.stateAmendment,
+  )
+  resourceObjects: ResourceObject[];
 
-  @DeleteDateColumn()
-  deleted_at: Date;
+  @DeleteDateColumn({ nullable: true, default: null })
+  deleted_at: Date; // Coluna que indicará se o convênio foi excluído (null para não excluído, data para excluído)
 
   @CreateDateColumn() // Para já capturar a data e fazer a formatação
   created_at: Date;

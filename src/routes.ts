@@ -12,6 +12,8 @@ import { DeliveryObjectControllers } from './controllers/DeliveryObjectControlle
 import { CovenantsController } from './controllers/CovenantsController';
 import { CovenantAuthorsController } from './controllers/CovenantAuthorsController';
 import { AuthorController } from './controllers/AuthorController';
+import { StateAmendmentController } from './controllers/StateAmendmentController';
+import { StateTreasuryController } from './controllers/StateTreasuryController';
 
 const router = Router();
 const objectsController = new ObjectsController();
@@ -26,6 +28,8 @@ const goalController = new GoalController();
 const resourceObjectController = new ResourceObjectController();
 const deliveryController = new DeliveryObjectControllers();
 const covenantAuthor = new CovenantAuthorsController();
+const stateAmendment = new StateAmendmentController();
+const stateTreasury = new StateTreasuryController();
 
 /*
     5 métodos de requisição HTTP mais utilizados:
@@ -58,11 +62,19 @@ router.put('/covenants/:id', verifyToken, covenantsController.update);
 router.delete('/covenants/:id', verifyToken, covenantsController.remove);
 router.patch('/covenants/:id', verifyToken, covenantsController.restore);
 
-router.post('/author', verifyToken, grantorController.create);
-router.get('/author', verifyToken, grantorController.all);
-router.get('/author/:id', verifyToken, grantorController.one);
-router.put('/author/:id', verifyToken, grantorController.update);
-router.delete('/author/:id', verifyToken, grantorController.remove);
+//Emenda estadual
+router.post('/stateAmendment', verifyToken, stateAmendment.create);
+router.get('/stateAmendment', verifyToken, stateAmendment.all);
+router.get('/stateAmendment/:id', verifyToken, stateAmendment.one);
+router.put('/stateAmendment/:id', verifyToken, stateAmendment.update);
+router.delete('/stateAmendment/:id', verifyToken, stateAmendment.remove);
+
+//Emenda Tesouro estadual
+router.post('/stateTreasury', verifyToken, stateTreasury.create);
+router.get('/stateTreasury', verifyToken, stateTreasury.all);
+router.get('/stateTreasury/:id', verifyToken, stateTreasury.one);
+router.put('/stateTreasury/:id', verifyToken, stateTreasury.update);
+router.delete('/stateTreasury/:id', verifyToken, stateTreasury.remove);
 
 // router.post('/covenantAuthor', verifyToken, covenantAuthor.create);
 router.get('/covenantAuthor', verifyToken, covenantAuthor.all);
@@ -86,6 +98,11 @@ router.put('/goals/:id', verifyToken, goalController.update);
 router.delete('/goals/:id', verifyToken, goalController.remove);
 router.patch('/goals/:id', verifyToken, goalController.restore);
 
+router.post('/author', verifyToken, grantorController.create);
+router.get('/author', verifyToken, grantorController.all);
+router.get('/author/:id', verifyToken, grantorController.one);
+router.put('/author/:id', verifyToken, grantorController.update);
+router.delete('/author/:id', verifyToken, grantorController.remove);
 // rotas de eixos
 router.post('/axles', verifyToken, axleController.create);
 router.get('/axles', verifyToken, axleController.all);

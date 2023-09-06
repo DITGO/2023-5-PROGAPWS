@@ -14,6 +14,8 @@ import { Goal } from './Goal';
 import { DeliveryObjects } from './DeliveryObjects';
 import { Covenant } from './Covenant';
 import { DestinationObjects } from './DestinationObjects';
+import { StateAmendment } from './StateAmendment';
+import { StateTreasury } from './stateTreasury';
 
 @Entity('resourceObjects') // Do TypeORM, pois será uma entidade do banco de dados, utilizada no controller
 export class ResourceObject {
@@ -54,6 +56,16 @@ export class ResourceObject {
   })
   commitmentDate: string;
 
+  @ManyToOne(
+    () => StateAmendment,
+    stateAmendment => stateAmendment.resourceObjects,
+    {
+      eager: true,
+      nullable: true,
+    },
+  )
+  stateAmendment: StateAmendment;
+
   @ManyToOne(() => Covenant, covenants => covenants.resourceObjects, {
     eager: true,
     nullable: true,
@@ -65,6 +77,16 @@ export class ResourceObject {
     nullable: true,
   })
   goal: Goal;
+
+  @ManyToOne(
+    () => StateTreasury,
+    stateTreasury => stateTreasury.resourceObjects,
+    {
+      eager: true,
+      nullable: true,
+    },
+  )
+  stateTreasury: StateTreasury;
 
   @ManyToOne(() => Objects, objetc => objetc.resourceObjects, {
     eager: true,

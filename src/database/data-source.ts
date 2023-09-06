@@ -13,6 +13,8 @@ import { Covenant } from '../models/Covenant';
 import { Author } from '../models/Author';
 import { DestinationObjects } from '../models/DestinationObjects';
 import { CovenantAuthor } from '../models/CovenantAuthor';
+import { StateAmendment } from '../models/StateAmendment';
+import { StateTreasury } from '../models/stateTreasury';
 // eslint-disable-next-line @typescript-eslint/no-var-requires
 require('dotenv').config();
 
@@ -37,6 +39,8 @@ export const APPDataSource = new DataSource({
     Covenant,
     Goal,
     Author,
+    StateTreasury,
+    StateAmendment,
     DestinationObjects,
     CovenantAuthor,
   ],
