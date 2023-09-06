@@ -135,6 +135,7 @@ class ResourceObjectController {
         covenants: true,
         destinationObjects: true,
         stateAmendment: true,
+        stateTreasury: true,
       },
     });
 
