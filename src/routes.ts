@@ -14,6 +14,7 @@ import { CovenantAuthorsController } from './controllers/CovenantAuthorsControll
 import { AuthorController } from './controllers/AuthorController';
 import { StateAmendmentController } from './controllers/StateAmendmentController';
 import { StateTreasuryController } from './controllers/StateTreasuryController';
+import { FddController } from './controllers/FddController';
 
 const router = Router();
 const objectsController = new ObjectsController();
@@ -30,6 +31,7 @@ const deliveryController = new DeliveryObjectControllers();
 const covenantAuthor = new CovenantAuthorsController();
 const stateAmendment = new StateAmendmentController();
 const stateTreasury = new StateTreasuryController();
+const fddController = new FddController();
 
 /*
     5 métodos de requisição HTTP mais utilizados:
@@ -90,7 +92,15 @@ router.delete(
   verifyToken,
   destinationObjects.remove,
 );
+// rota fdd
+router.post('/fdd', verifyToken, fddController.create);
+router.get('/fdd', verifyToken, fddController.all);
+router.get('/fdd/:id', verifyToken, fddController.one);
+router.put('/fdd/:id', verifyToken, fddController.update);
+router.delete('/fdd/:id', verifyToken, fddController.remove);
+router.patch('/fdd/:id', verifyToken, fddController.restore);
 
+//rota meta
 router.post('/goals', verifyToken, goalController.create);
 router.get('/goals', verifyToken, goalController.all);
 router.get('/goals/:id', verifyToken, goalController.one);

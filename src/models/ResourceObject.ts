@@ -16,6 +16,7 @@ import { Covenant } from './Covenant';
 import { DestinationObjects } from './DestinationObjects';
 import { StateAmendment } from './StateAmendment';
 import { StateTreasury } from './stateTreasury';
+import { Fdd } from './Fdd';
 
 @Entity('resourceObjects') // Do TypeORM, pois será uma entidade do banco de dados, utilizada no controller
 export class ResourceObject {
@@ -87,6 +88,12 @@ export class ResourceObject {
     },
   )
   stateTreasury: StateTreasury;
+
+  @ManyToOne(() => Fdd, fdd => fdd.resourceObjects, {
+    eager: true,
+    nullable: true,
+  })
+  fdd: Fdd;
 
   @ManyToOne(() => Objects, objetc => objetc.resourceObjects, {
     eager: true,

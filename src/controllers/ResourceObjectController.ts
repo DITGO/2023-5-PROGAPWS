@@ -24,6 +24,7 @@ class ResourceObjectController {
       covenants,
       objects,
       goal,
+      fdd,
     } = request.body;
 
     const schema = yup.object().shape({
@@ -66,6 +67,7 @@ class ResourceObjectController {
       covenants,
       objects,
       goal,
+      fdd,
     });
 
     const savedResourceObject = await resourceObjectRepository.save(
@@ -109,12 +111,13 @@ class ResourceObjectController {
 
     const all = await resourceObjectRepository.find({
       relations: {
-        objects: true,
+        fdd: true,
         goal: true,
+        objects: true,
         covenants: true,
         stateTreasury: true,
-        destinationObjects: true,
         stateAmendment: true,
+        destinationObjects: true,
       },
     });
 
@@ -130,12 +133,13 @@ class ResourceObjectController {
     const one = await resourceObjectRepository.findOne({
       where: { id: id },
       relations: {
-        objects: true,
+        fdd: true,
         goal: true,
+        objects: true,
         covenants: true,
-        destinationObjects: true,
-        stateAmendment: true,
         stateTreasury: true,
+        stateAmendment: true,
+        destinationObjects: true,
       },
     });
 
@@ -160,6 +164,7 @@ class ResourceObjectController {
       covenants,
       objects,
       goal,
+      fdd,
     } = request.body;
     const id = request.params.id;
 
@@ -206,6 +211,7 @@ class ResourceObjectController {
         covenants,
         objects,
         goal,
+        fdd,
       },
     );
 
