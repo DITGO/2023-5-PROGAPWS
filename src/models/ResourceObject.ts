@@ -74,7 +74,6 @@ export class ResourceObject {
   covenants: Covenant;
 
   @ManyToOne(() => Goal, goal => goal.resourceObjects, {
-    eager: true,
     nullable: true,
   })
   goal: Goal;

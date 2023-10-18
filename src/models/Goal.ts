@@ -26,12 +26,12 @@ export class Goal {
   @Column({ nullable: true })
   balance: string;
 
-  @ManyToOne(() => BottomToBottom, bottomToBottom => bottomToBottom.goal, {
-    eager: true,
-  })
+  @ManyToOne(() => BottomToBottom, bottomToBottom => bottomToBottom.goal)
   bottomToBottom: BottomToBottom;
 
-  @OneToMany(() => ResourceObject, resourceObjects => resourceObjects.goal)
+  @OneToMany(() => ResourceObject, resourceObjects => resourceObjects.goal, {
+    eager: true,
+  })
   resourceObjects: ResourceObject[];
 
   @DeleteDateColumn()

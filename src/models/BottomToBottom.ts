@@ -26,7 +26,7 @@ export class BottomToBottom {
   @Column({ nullable: true })
   amount: string;
 
-  @OneToMany(() => Goal, goal => goal.bottomToBottom)
+  @OneToMany(() => Goal, goal => goal.bottomToBottom, { eager: true })
   goal: Goal[];
 
   @ManyToOne(() => Axle, axle => axle.bottomToBottom, {
