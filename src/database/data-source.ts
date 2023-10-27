@@ -16,6 +16,7 @@ import { CovenantAuthor } from '../models/CovenantAuthor';
 import { StateAmendment } from '../models/StateAmendment';
 import { StateTreasury } from '../models/stateTreasury';
 import { Fdd } from '../models/Fdd';
+
 // eslint-disable-next-line @typescript-eslint/no-var-requires
 require('dotenv').config();
 

@@ -16,6 +16,7 @@ class ResourceObjectController {
       processNumber,
       natureExpense,
       commitmentDate,
+      forecastDate,
       acquisitionMode,
       executedValue,
       destinationObjects,
@@ -37,6 +38,7 @@ class ResourceObjectController {
       natureExpense: yup.string().nullable(),
       acquisitionMode: yup.string().nullable(),
       commitmentDate: yup.string().nullable(),
+      forecastDate: yup.string().nullable(),
       executedValue: yup.string().nullable(),
     });
 
@@ -60,6 +62,7 @@ class ResourceObjectController {
       processNumber,
       natureExpense,
       commitmentDate,
+      forecastDate,
       executedValue,
       acquisitionMode,
       stateAmendment,
@@ -157,6 +160,7 @@ class ResourceObjectController {
       acquisitionMode,
       natureExpense,
       commitmentDate,
+      forecastDate,
       executedValue,
       destinationObjects,
       stateAmendment,
@@ -178,6 +182,7 @@ class ResourceObjectController {
       natureExpense: yup.string().nullable(),
       acquisitionMode: yup.string().nullable(),
       commitmentDate: yup.string().nullable(),
+      forecastDate: yup.string().nullable(),
       executedValue: yup.string().nullable(),
     });
 
@@ -205,6 +210,7 @@ class ResourceObjectController {
         natureExpense,
         acquisitionMode,
         commitmentDate,
+        forecastDate,
         executedValue,
         stateAmendment,
         stateTreasury,

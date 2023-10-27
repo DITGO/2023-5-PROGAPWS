@@ -57,6 +57,11 @@ export class ResourceObject {
   })
   commitmentDate: string;
 
+  @Column({
+    nullable: true,
+  })
+  forecastDate: string;
+
   @ManyToOne(
     () => StateAmendment,
     stateAmendment => stateAmendment.resourceObjects,
